@@ -77,6 +77,4 @@ ISO="$(find /build -maxdepth 1 -type f -name "live-image-amd64.hybrid.iso" -prin
 test -n "$ISO" && test -s "$ISO"
 xorriso -indev "$ISO" -report_el_torito plain
 install -m 0644 "$ISO" /out/kelpie-os-linux-v3-amd64.iso
-cd /out
-sha256sum kelpie-os-linux-v3-amd64.iso | tee SHA256SUMS
-file kelpie-os-linux-v3-amd64.iso
+bash /src/validate-iso.sh /out/kelpie-os-linux-v3-amd64.iso
