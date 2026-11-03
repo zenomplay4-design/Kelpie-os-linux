@@ -1,6 +1,8 @@
+import tempfile
 import unittest
+from pathlib import Path
 
-from kelpie_utils import format_size, has_upgradable_packages
+from kelpie_utils import format_size, has_upgradable_packages, read_nouveau_gpu_stats
 
 
 class KelpieUtilityTests(unittest.TestCase):
@@ -15,6 +17,19 @@ class KelpieUtilityTests(unittest.TestCase):
         self.assertEqual(format_size(0), "0 B")
         self.assertEqual(format_size(1000), "1.0 KB")
         self.assertEqual(format_size(1_000_000), "1.0 MB")
+
+    def test_nouveau_gpu_sysfs_metrics(self):
+        with tempfile.TemporaryDirectory() as temporary:
+            device = Path(temporary) / "card0" / "device"
+            hwmon = device / "hwmon" / "hwmon0"
+            hwmon.mkdir(parents=True)
+            (device / "gpu_busy_percent").write_text("42\\n", encoding="ascii")
+            (hwmon / "temp1_input").write_text("61500\\n", encoding="ascii")
+            self.assertEqual(read_nouveau_gpu_stats(temporary), "GPU 42% · 62 °C")
+
+    def test_nouveau_gpu_sysfs_missing_is_safe(self):
+        with tempfile.TemporaryDirectory() as temporary:
+            self.assertEqual(read_nouveau_gpu_stats(temporary), "Métricas Nouveau indisponíveis")
 
     def test_invalid_size_is_safe(self):
         self.assertEqual(format_size(None), "Tamanho desconhecido")
