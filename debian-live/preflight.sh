@@ -11,7 +11,7 @@ need_dir() { [[ -d "$1" ]] || fail "diretório ausente: ${1#"$ROOT"/}"; }
 
 echo "Kelpie OS V3 — verificações pré-compilação"
 for file in \
-  "$ROOT/build-in-container.sh" "$ROOT/validate-packages.sh" "$ROOT/assets/kelpie-constellation.svg" "$ROOT/README-V3-VALIDATION.md" "$ROOT/CALAMARES-TEST-PLAN-V3.md" "$ROOT/HARDWARE-VALIDATION-MATRIX-V3.md" \
+  "$ROOT/build-in-container.sh" "$ROOT/validate-packages.sh" "$ROOT/validate-iso.sh" "$ROOT/assets/kelpie-constellation.svg" "$ROOT/README-V3-VALIDATION.md" "$ROOT/CALAMARES-TEST-PLAN-V3.md" "$ROOT/HARDWARE-VALIDATION-MATRIX-V3.md" \
   "$CONFIG/package-lists/kelpie.list.chroot" "$CONFIG/package-lists/kelpie-diagnostics.list.chroot" \
   "$CONFIG/hooks/normal/0200-kelpie-branding.hook.chroot" \
   "$CONFIG/hooks/normal/0300-kelpie-dconf.hook.chroot" \
@@ -42,6 +42,7 @@ grep -q 'viewBox="0 0 1920 1080"' "$ROOT/assets/kelpie-constellation.svg" || fai
 bash -n "$ROOT/preflight.sh" || fail "sintaxe Bash inválida em preflight.sh"
 bash -n "$ROOT/build-in-container.sh" || fail "sintaxe Bash inválida em build-in-container.sh"
 bash -n "$ROOT/validate-packages.sh" || fail "sintaxe Bash inválida em validate-packages.sh"
+bash -n "$ROOT/validate-iso.sh" || fail "sintaxe Bash inválida em validate-iso.sh"
 for hook in "$CONFIG"/hooks/normal/*.hook.chroot; do
   sh -n "$hook" || fail "sintaxe POSIX shell inválida em $hook"
 done
