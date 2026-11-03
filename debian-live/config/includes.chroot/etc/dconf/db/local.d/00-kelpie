@@ -1,6 +1,12 @@
 [org/gnome/desktop/interface]
 color-scheme='prefer-dark'
+gtk-theme='Adwaita-dark'
+icon-theme='hicolor'
 
 [org/gnome/desktop/background]
-picture-uri='file:///usr/share/backgrounds/kelpie/kelpie-wolf.jpg'
-picture-uri-dark='file:///usr/share/backgrounds/kelpie/kelpie-wolf.jpg'
+picture-uri='file:///usr/share/backgrounds/kelpie/kelpie-constellation.png'
+picture-uri-dark='file:///usr/share/backgrounds/kelpie/kelpie-constellation.png'
+picture-options='zoom'
+
+[org/gnome/shell]
+enabled-extensions=['kelpie-menu@kelpieos.local']
