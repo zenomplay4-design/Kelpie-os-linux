@@ -4,6 +4,8 @@ import json
 import shutil
 import subprocess
 
+from kelpie_utils import format_size
+
 import gi
 gi.require_version("Gtk", "4.0")
 from gi.repository import Gtk, GLib
@@ -12,17 +14,6 @@ APP_ID = "local.kelpie.Disk"
 LSBLK_COLUMNS = "NAME,PATH,SIZE,TYPE,FSTYPE,LABEL,UUID,MOUNTPOINTS,MODEL,TRAN,RM,RO"
 
 
-def format_size(value):
-    try:
-        amount = float(value)
-    except (TypeError, ValueError):
-        return "Tamanho desconhecido"
-    units = ("B", "KB", "MB", "GB", "TB", "PB")
-    for unit in units:
-        if amount < 1000 or unit == units[-1]:
-            return f"{amount:.0f} {unit}" if unit == "B" else f"{amount:.1f} {unit}"
-        amount /= 1000
-    return f"{amount:.1f} PB"
 
 
 class KelpieDisk(Gtk.Application):
