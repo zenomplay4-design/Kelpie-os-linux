@@ -1,27 +1,24 @@
-name: Build Kelpie OS ISO
+name: Build Kelpie OS Linux V3 ISO
 
 on:
   workflow_dispatch:
-  push:
-    branches: [ main ]
-    paths:
-      - 'debian-live/**'
-      - '.github/workflows/build-iso.yml'
 
 permissions:
   contents: read
 
 concurrency:
-  group: kelpie-os-iso-${{ github.ref }}
-  cancel-in-progress: true
+  group: kelpie-os-v3-iso
+  cancel-in-progress: false
 
 jobs:
   build:
     runs-on: ubuntu-24.04
     timeout-minutes: 360
     steps:
-      - name: Checkout source
+      - name: Checkout V3 development branch
         uses: actions/checkout@v4
+        with:
+          ref: v3-development
 
       - name: Free runner disk space
         run: |
@@ -36,12 +33,12 @@ jobs:
             -v "${GITHUB_WORKSPACE}/dist:/out" \
             debian:trixie bash /src/build-in-container.sh
 
-      - name: Upload ISO and checksum
+      - name: Upload candidate ISO and checksum
         uses: actions/upload-artifact@v4
         with:
-          name: kelpie-os-linux-debian13-amd64
+          name: kelpie-os-linux-v3-candidate-amd64
           path: |
-            dist/kelpie-os-linux-v2-amd64.iso
+            dist/kelpie-os-linux-v3-amd64.iso
             dist/SHA256SUMS
           if-no-files-found: error
           compression-level: 0
