@@ -157,7 +157,7 @@ class KelpieUpdate(Gtk.Application):
         self.run_task(
             "Verificando atualizações",
             [
-                (["pkexec", "/usr/bin/apt-get", "update"], {"DEBIAN_FRONTEND": "noninteractive"}),
+                (["pkexec", "/usr/bin/env", "DEBIAN_FRONTEND=noninteractive", "/usr/bin/apt-get", "update"], {"DEBIAN_FRONTEND": "noninteractive"}),
                 (["/usr/bin/apt-get", "-s", "upgrade"], {"LC_ALL": "C"}),
             ],
             self.enable_install
@@ -189,7 +189,7 @@ class KelpieUpdate(Gtk.Application):
         self.run_task(
             "Instalando atualizações",
             [
-                (["pkexec", "/usr/bin/apt-get", "-y", "upgrade"],
+                (["pkexec", "/usr/bin/env", "DEBIAN_FRONTEND=noninteractive", "/usr/bin/apt-get", "-y", "upgrade"],
                  {"DEBIAN_FRONTEND": "noninteractive"})
             ]
         )
