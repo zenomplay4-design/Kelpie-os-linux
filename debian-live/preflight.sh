@@ -80,7 +80,9 @@ grep -q 'intellihide=false' "$CONFIG/includes.chroot/etc/dconf/db/local.d/00-kel
 grep -q 'dconf update' "$CONFIG/hooks/normal/0300-kelpie-dconf.hook.chroot" || fail "hook não compila o banco dconf"
 grep -q 'kelpie-menu@kelpieos.local' "$CONFIG/includes.chroot/etc/dconf/db/local.d/00-kelpie" || fail "extensão Kelpie não está habilitada"
 grep -q 'kelpie-constellation.png' "$CONFIG/includes.chroot/etc/dconf/db/local.d/00-kelpie" || fail "wallpaper de constelação não está configurado"
-grep -q 'kelpie-paw.png' "$CONFIG/includes.chroot/usr/share/gnome-shell/extensions/kelpie-menu@kelpieos.local/extension.js" || fail "ícone oficial da pata não está referenciado"
+grep -q 'kelpie-paw.svg' "$CONFIG/includes.chroot/usr/share/gnome-shell/extensions/kelpie-menu@kelpieos.local/extension.js" || fail "ícone oficial vetorial da pata não está referenciado"
+grep -q 'kelpie-paw.svg' "$CONFIG/includes.chroot/etc/calamares/branding/kelpie/branding.desc" || fail "ícone da pata não está configurado no Calamares"
+test -s "$CONFIG/includes.chroot/usr/share/pixmaps/kelpie-paw.svg" || fail "arquivo vetorial da pata está ausente"
 grep -q '^branding: kelpie$' "$CONFIG/includes.chroot/etc/calamares/settings.conf" || fail "Calamares não usa a identidade Kelpie"
 grep -q '^prompt-install: true$' "$CONFIG/includes.chroot/etc/calamares/settings.conf" || fail "Calamares deve pedir confirmação antes da instalação"
 
