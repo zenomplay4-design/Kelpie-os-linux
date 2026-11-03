@@ -8,6 +8,7 @@ gir1.2-adw-1
 pciutils
 usbutils
 lshw
+util-linux
 btop
 gnome-logs
 mousetweaks
