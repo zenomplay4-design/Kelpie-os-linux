@@ -1,0 +1,7 @@
+Package: nvidia-driver nvidia-kernel-dkms nvidia-settings nvidia-persistenced
+Pin: release n=trixie-backports
+Pin-Priority: 990
+
+Package: *
+Pin: release n=trixie-backports
+Pin-Priority: 100
