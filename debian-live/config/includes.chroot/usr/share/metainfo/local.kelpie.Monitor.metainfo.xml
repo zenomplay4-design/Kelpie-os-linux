@@ -2,7 +2,7 @@
 <component type="desktop-application">
   <id>local.kelpie.Monitor</id>
   <name>Kelpie Monitor</name>
-  <summary>Monitore CPU, memória, GPU, temperaturas e processos</summary>
+  <summary>Monitor CPU, memory, GPU, temperatures and processes</summary>
   <summary xml:lang="pt_BR">Monitore CPU, memória, GPU, temperaturas e processos</summary>
   <description>
     <p>Ferramenta gráfica leve para acompanhar o uso do processador, memória, GPU NVIDIA quando disponível, sensores, discos e processos.</p>
