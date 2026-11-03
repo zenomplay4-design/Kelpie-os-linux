@@ -2,6 +2,9 @@
 set -Eeuo pipefail
 export DEBIAN_FRONTEND=noninteractive
 
+# Catch missing files and malformed scripts before spending time on package setup.
+bash /src/preflight.sh
+
 # Use the complete Debian 13 archive components, including firmware and NVIDIA.
 mkdir -p /etc/apt/sources.list.d
 cat > /etc/apt/sources.list.d/debian.sources <<'EOF'
