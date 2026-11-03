@@ -99,8 +99,8 @@ Legenda:
 - [x] Workflow manual direcionado à branch v3-development.
 - [x] Pré-verificação estrutural conectada ao processo de build.
 - [x] Validação APT de nomes e resolução de dependências conectada ao build.
-- [ ] Executar pré-verificação no ambiente real de CI e corrigir todos os erros.
-- [ ] Executar validação completa APT e corrigir pacotes ausentes/conflitos.
+- [x] Executar pré-verificação no ambiente real de CI: workflow de validação concluído com sucesso.
+- [x] Executar validação APT de metadados e resolução de dependências: workflow de validação concluído com sucesso.
 - [ ] Compilar ISO candidata no GitHub Actions.
 - [ ] Conferir checksum SHA256 e integridade da ISO.
 - [ ] Inspecionar partições, bootloader, entradas UEFI/BIOS e conteúdo da ISO.
