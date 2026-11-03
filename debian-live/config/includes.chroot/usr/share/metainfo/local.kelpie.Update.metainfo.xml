@@ -2,7 +2,7 @@
 <component type="desktop-application">
   <id>local.kelpie.Update</id>
   <name>Kelpie Update</name>
-  <summary>Verifique e instale atualizações do sistema</summary>
+  <summary>Check for and install system updates</summary>
   <summary xml:lang="pt_BR">Verifique e instale atualizações do sistema</summary>
   <description>
     <p>Interface gráfica para consultar atualizações APT, simular alterações antes da instalação e registrar operações em log.</p>
