@@ -54,26 +54,9 @@ cp config/includes.chroot/usr/share/pixmaps/kelpie-paw.png config/includes.chroo
 # Calamares branding.desc references the SVG asset, so ship it beside the branding file.
 cp config/includes.chroot/usr/share/pixmaps/kelpie-paw.svg config/includes.chroot/etc/calamares/branding/kelpie/kelpie-paw.svg
 
-# Temporary constellation wallpaper used until the approved final artwork is added.
-cat > /tmp/wallpaper.svg <<'SVG'
-<svg xmlns="http://www.w3.org/2000/svg" width="1920" height="1080">
-<defs><radialGradient id="sky"><stop stop-color="#173b70"/><stop offset="1" stop-color="#040918"/></radialGradient><filter id="glow"><feGaussianBlur stdDeviation="8"/></filter></defs>
-<rect width="1920" height="1080" fill="url(#sky)"/>
-<g fill="#cfe4ff" opacity=".7">
-<circle cx="120" cy="140" r="2"/><circle cx="260" cy="330" r="2"/><circle cx="420" cy="170" r="3"/><circle cx="610" cy="260" r="2"/><circle cx="790" cy="120" r="2"/><circle cx="980" cy="230" r="2"/><circle cx="1170" cy="120" r="2"/><circle cx="1390" cy="270" r="3"/><circle cx="1600" cy="140" r="2"/><circle cx="1780" cy="350" r="2"/><circle cx="170" cy="760" r="2"/><circle cx="430" cy="900" r="2"/><circle cx="680" cy="780" r="2"/><circle cx="1210" cy="900" r="2"/><circle cx="1510" cy="790" r="2"/><circle cx="1780" cy="930" r="2"/>
-</g>
-<g fill="none" stroke="#a9cfff" stroke-width="5" stroke-linecap="round" stroke-linejoin="round" opacity=".85">
-<path d="M760 650 L690 520 L710 350 L820 220 L930 330 L1010 350 L1110 300 L1220 360 L1260 470 L1190 560 L1130 700 L1160 820 L1080 850 L990 800 L930 690 L850 700 L820 850 L730 850 L760 650"/>
-<path d="M710 350 L610 300 L560 390 L690 520 M930 330 L1010 350 L1050 470 L970 510 L880 470 L930 330 M1190 560 L1300 600 L1370 540"/>
-<path d="M850 700 L930 690 L990 800 M820 850 L730 850"/>
-</g>
-<g fill="#e0eeff">
-<circle cx="760" cy="650" r="11"/><circle cx="690" cy="520" r="9"/><circle cx="710" cy="350" r="10"/><circle cx="820" cy="220" r="12"/><circle cx="930" cy="330" r="10"/><circle cx="1010" cy="350" r="9"/><circle cx="1110" cy="300" r="11"/><circle cx="1220" cy="360" r="10"/><circle cx="1260" cy="470" r="11"/><circle cx="1190" cy="560" r="9"/><circle cx="1130" cy="700" r="10"/><circle cx="1160" cy="820" r="9"/><circle cx="1080" cy="850" r="10"/><circle cx="990" cy="800" r="9"/><circle cx="930" cy="690" r="10"/><circle cx="850" cy="700" r="9"/><circle cx="820" cy="850" r="10"/><circle cx="730" cy="850" r="9"/><circle cx="610" cy="300" r="9"/><circle cx="560" cy="390" r="10"/><circle cx="1050" cy="470" r="8"/><circle cx="970" cy="510" r="8"/><circle cx="880" cy="470" r="8"/><circle cx="1300" cy="600" r="8"/><circle cx="1370" cy="540" r="8"/>
-</g>
-<g fill="#fff" filter="url(#glow)" opacity=".45"><circle cx="820" cy="220" r="18"/><circle cx="1110" cy="300" r="18"/><circle cx="1260" cy="470" r="18"/></g>
-</svg>
-SVG
-rsvg-convert -w 1920 -h 1080 /tmp/wallpaper.svg > config/includes.chroot/usr/share/backgrounds/kelpie/kelpie-constellation.png
+# Render the approved 16:9 Kelpie dog-constellation artwork.
+test -s /src/assets/kelpie-constellation.svg
+rsvg-convert -w 1920 -h 1080 /src/assets/kelpie-constellation.svg > config/includes.chroot/usr/share/backgrounds/kelpie/kelpie-constellation.png
 
 chmod +x config/hooks/normal/*.hook.chroot
 lb config \
