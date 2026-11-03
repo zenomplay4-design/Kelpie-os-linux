@@ -55,7 +55,8 @@ Legenda:
 - [ ] Confirmar inicialização e atualização do serviço Snap em instalação limpa.
 - [ ] Criar política para avisos de origem, assinatura e permissões de aplicativos.
 - [ ] Não anunciar suporte AUR nativo: AUR pertence ao ecossistema Arch Linux.
-- [x] Criar primeira versão do Kelpie Monitor em GTK4 (CPU, RAM, GPU, temperaturas, disco e processos).\n- [ ] Testar Kelpie Monitor em sessão GNOME real, inclusive com Nouveau e sem sensor de temperatura.
+- [x] Criar primeira versão do Kelpie Monitor em GTK4 (CPU, RAM, GPU, temperaturas, disco e processos).
+- [ ] Testar Kelpie Monitor em sessão GNOME real, inclusive com Nouveau e sem sensor de temperatura.
 - [x] Criar primeira versão do Kelpie Update em GTK4, com verificação, confirmação, autenticação administrativa e logs locais.
 - [ ] Testar Kelpie Update em sistema instalado, incluindo cancelamento, falha de rede, autenticação negada e atualização concluída.
 - [ ] Desenvolver Kelpie Tweaks (opções visuais e desempenho, com restauração de padrões).
