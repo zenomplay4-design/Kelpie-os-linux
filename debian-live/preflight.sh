@@ -30,6 +30,7 @@ for file in \
   "$CONFIG/includes.chroot/usr/lib/kelpie/kelpie-update.py" \
   "$CONFIG/includes.chroot/usr/lib/kelpie/kelpie-tweaks.py" \
   "$CONFIG/includes.chroot/usr/lib/kelpie/kelpie-disk.py" \
+  "$CONFIG/includes.chroot/usr/lib/kelpie/kelpie_utils.py" \
   "$CONFIG/includes.chroot/usr/share/gnome-shell/extensions/kelpie-menu@kelpieos.local/extension.js" \
   "$CONFIG/includes.chroot/usr/share/gnome-shell/extensions/kelpie-menu@kelpieos.local/metadata.json"; do
   need_file "$file"
