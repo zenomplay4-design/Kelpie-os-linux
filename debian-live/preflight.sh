@@ -18,6 +18,9 @@ need_file "$CONFIG/package-lists/kelpie-diagnostics.list.chroot"
 need_file "$CONFIG/hooks/normal/0200-kelpie-branding.hook.chroot"
 need_file "$CONFIG/includes.chroot/etc/apt/apt.conf.d/20auto-upgrades"
 need_file "$CONFIG/includes.chroot/etc/dconf/db/local.d/00-kelpie"
+need_file "$CONFIG/includes.chroot/etc/calamares/settings.conf"
+need_file "$CONFIG/includes.chroot/etc/calamares/branding/kelpie/branding.desc"
+need_file "$CONFIG/includes.chroot/usr/share/applications/kelpie-install.desktop"
 need_file "$CONFIG/includes.chroot/usr/share/gnome-shell/extensions/kelpie-menu@kelpieos.local/extension.js"
 need_file "$CONFIG/includes.chroot/usr/share/gnome-shell/extensions/kelpie-menu@kelpieos.local/metadata.json"
 need_dir "$CONFIG/includes.chroot/usr/share/gnome-shell/extensions/kelpie-menu@kelpieos.local"
@@ -26,6 +29,24 @@ bash -n "$ROOT/preflight.sh" || fail "sintaxe Bash inválida em preflight.sh"
 bash -n "$ROOT/build-in-container.sh" || fail "sintaxe Bash inválida em build-in-container.sh"
 bash -n "$ROOT/validate-packages.sh" || fail "sintaxe Bash inválida em validate-packages.sh"
 sh -n "$CONFIG/hooks/normal/0200-kelpie-branding.hook.chroot" || fail "sintaxe POSIX shell inválida no hook de identidade"
+
+if command -v python3 >/dev/null 2>&1; then
+  python3 -m json.tool "$CONFIG/includes.chroot/usr/share/gnome-shell/extensions/kelpie-menu@kelpieos.local/metadata.json" >/dev/null || fail "metadata.json da extensão não é JSON válido"
+  python3 - <<'PY' || fail "configurações YAML do Calamares inválidas"
+import yaml
+from pathlib import Path
+root = Path(__file__).resolve().parent if "__file__" in globals() else Path(".")
+for name in (
+    "config/includes.chroot/etc/calamares/settings.conf",
+    "config/includes.chroot/etc/calamares/branding/kelpie/branding.desc",
+):
+    with open(name, encoding="utf-8") as stream:
+        yaml.safe_load(stream)
+print("YAML do Calamares válido.")
+PY
+else
+  fail "python3 não encontrado para validar JSON/YAML"
+fi
 
 if ! grep -q 'APT::Periodic::Unattended-Upgrade "1"' "$CONFIG/includes.chroot/etc/apt/apt.conf.d/20auto-upgrades"; then
   fail "atualizações automáticas de segurança não estão habilitadas"
@@ -38,6 +59,12 @@ if ! grep -q 'kelpie-constellation.png' "$CONFIG/includes.chroot/etc/dconf/db/lo
 fi
 if ! grep -q 'kelpie-paw.png' "$CONFIG/includes.chroot/usr/share/gnome-shell/extensions/kelpie-menu@kelpieos.local/extension.js"; then
   fail "ícone oficial da pata não está referenciado no menu"
+fi
+if ! grep -q '^branding: kelpie$' "$CONFIG/includes.chroot/etc/calamares/settings.conf"; then
+  fail "Calamares não está usando a identidade Kelpie"
+fi
+if ! grep -q '^prompt-install: true$' "$CONFIG/includes.chroot/etc/calamares/settings.conf"; then
+  fail "Calamares deve pedir confirmação antes de iniciar a instalação"
 fi
 
 if ((ERRORS)); then
