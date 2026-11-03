@@ -44,6 +44,7 @@ Legenda:
 - [ ] Adicionar mascote preto com marcações caramelo e peito branco nos locais aprovados, sem substituir a pata como logo.
 - [ ] Implementar blur/glassmorphism real e configurável em painel, dock, menus e central de controle.
 - [ ] Incluir opção para reduzir/desativar transparência e blur por desempenho/acessibilidade.
+- [x] Adicionar no Kelpie Tweaks um controle ajustável de opacidade do dock inferior, com restauração do padrão (0,28).
 - [ ] Implementar dock coerente com o design aprovado.
 - [ ] Personalizar tela de bloqueio com wallpaper oficial desfocado, relógio, data e controles nativos.
 - [ ] Testar extensão do menu em GNOME 48 e garantir fallback se ela falhar.
