@@ -25,7 +25,7 @@ apt-get update
 apt-get install -y --no-install-recommends \
   live-build debootstrap xorriso squashfs-tools dosfstools \
   grub-pc-bin grub-efi-amd64-bin mtools isolinux syslinux-common \
-  ca-certificates file librsvg2-bin
+  ca-certificates file librsvg2-bin python3-yaml
 
 # Fail early if any requested package is unavailable or dependencies conflict.
 bash /src/validate-packages.sh /src/config/package-lists/kelpie.list.chroot
@@ -48,6 +48,8 @@ rsvg-convert -w 512 -h 512 /tmp/paw.svg > config/includes.chroot/usr/share/pixma
 cp config/includes.chroot/usr/share/pixmaps/kelpie-paw.png config/includes.chroot/usr/share/pixmaps/kelpie-os-logo.png
 cp config/includes.chroot/usr/share/pixmaps/kelpie-paw.png config/includes.chroot/usr/share/icons/hicolor/128x128/apps/kelpie-os.png
 cp config/includes.chroot/usr/share/pixmaps/kelpie-paw.png config/includes.chroot/usr/share/icons/hicolor/512x512/apps/kelpie-os.png
+mkdir -p config/includes.chroot/etc/calamares/branding/kelpie
+cp config/includes.chroot/usr/share/pixmaps/kelpie-paw.png config/includes.chroot/etc/calamares/branding/kelpie/kelpie-paw.png
 
 # Temporary constellation wallpaper used until the approved final artwork is added.
 cat > /tmp/wallpaper.svg <<'SVG'
