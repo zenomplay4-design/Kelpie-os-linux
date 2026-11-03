@@ -1,0 +1,11 @@
+[Desktop Entry]
+Name=Kelpie Monitor
+Name[pt_BR]=Monitor Kelpie
+Comment=Monitorar CPU, RAM, GPU, temperaturas, discos e processos
+Comment[pt_BR]=Monitorar CPU, RAM, GPU, temperaturas, discos e processos
+Exec=/usr/bin/python3 /usr/lib/kelpie/kelpie-monitor.py
+Icon=utilities-system-monitor
+Terminal=false
+Type=Application
+Categories=System;Monitor;
+StartupNotify=true
