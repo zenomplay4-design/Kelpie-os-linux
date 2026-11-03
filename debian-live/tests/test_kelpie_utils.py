@@ -2,7 +2,7 @@ import tempfile
 import unittest
 from pathlib import Path
 
-from kelpie_utils import calculate_io_rates, format_size, has_upgradable_packages, read_cpu_model, read_nouveau_gpu_stats
+from kelpie_utils import calculate_io_rates, format_size, has_upgradable_packages, read_cpu_model, read_nouveau_gpu_stats, summarize_block_devices
 
 
 class KelpieUtilityTests(unittest.TestCase):
