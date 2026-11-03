@@ -108,8 +108,8 @@ Legenda:
 - [x] Validar wallpaper oficial 16:9 no workflow de testes estáticos (run 70, sucesso).
 - [x] Validar sintaxe Python, scripts shell, testes unitários, sequência Calamares e metadados AppStream no workflow estático (run 70, sucesso).
 - [ ] Compilar ISO candidata no GitHub Actions (nova execução disparada após ajuste de recuperação do workflow).
-- [ ] Conferir checksum SHA256 e integridade da ISO.
-- [ ] Inspecionar partições, bootloader, entradas UEFI/BIOS e conteúdo da ISO.
+- [x] Adicionar validação pós-build do conteúdo essencial da ISO (kernel, initrd e filesystem.squashfs), catálogo El Torito e verificação SHA256; execução real ainda depende da nova ISO.
+- [ ] Inspecionar partições, bootloader e entradas UEFI/BIOS da ISO candidata gerada; o script de validação já verifica o catálogo El Torito e arquivos essenciais.
 - [ ] Testar ISO em máquinas virtuais UEFI e BIOS, incluindo instalação.
 - [ ] Testar no hardware-alvo: Xeon E5-2640 v3, 16 GB RAM, X99 e GTX 750 2 GB.
 - [ ] Criar matriz de testes, registrar logs, defeitos e correções.
@@ -118,7 +118,7 @@ Legenda:
 
 ## Bloqueadores de lançamento atuais
 
-1. Ainda não existe build de ISO V3 confirmado.
+1. Ainda não existe build de ISO V3 da revisão atual confirmado; uma revisão anterior (build 30) produziu um artefato de 3,17 GB, ainda não aprovado como release.
 2. O Calamares personalizado foi integrado ao código e tem plano de teste seguro documentado, mas ainda precisa de teste de instalação em VM e hardware.
 3. Wallpaper oficial já foi integrado e validado no CI; a tela de bloqueio final ainda não foi personalizada nem testada.
 4. Kelpie Monitor e Kelpie Update já têm primeiras versões de código; Kelpie Disk já tem uma primeira versão de inventário somente leitura; Monitor, Update, Tweaks e Disk precisam de testes em sessão GNOME real.
@@ -133,5 +133,13 @@ A V3 permanece em desenvolvimento até que todos os itens obrigatórios sejam im
 - Branch: `v3-development`; commit observado antes do ajuste de recuperação: `176dd094`; ajuste do workflow registrado no commit `93ba1ec`.
 - Testes estáticos run 70: sucesso.
 - Validação Debian Trixie/APT run 93: concluída com sucesso.
-- Build ISO run 36: permaneceu sem atualização após iniciar a etapa de build; sem artefato ISO. Workflow ajustado para cancelar execuções anteriores concorrentes e limitar cada build a 240 minutos; nova execução deve confirmar recuperação.
+- Build ISO run 36: cancelado após ficar sem atualização. Workflow ajustado para isolar o grupo de recuperação, cancelar concorrentes e limitar cada build a 240 minutos. Builds 39–40 foram cancelados por commits sucessivos durante a correção; build 41 (SHA e6909b00) é a execução de recuperação que incorpora o validador pós-build. A revisão atual inclui ainda lint explícito do validador no workflow estático.
 - A aprovação dos workflows não substitui os testes de boot, instalação, sessão GNOME ou hardware real.
+
+
+## Validação automatizada da ISO (03/11/2026)
+
+- Criado `debian-live/validate-iso.sh`: exige ISO não vazia e maior que 500 MB, catálogo El Torito, kernel, initrd e `filesystem.squashfs`; gera e confere `SHA256SUMS`.
+- O build agora executa esse validador antes de enviar o artefato.
+- O preflight verifica a presença e a sintaxe do validador; o workflow estático também faz lint do script.
+- Essa validação é estrutural. Não prova boot real, instalação Calamares nem compatibilidade com a GTX 750.
