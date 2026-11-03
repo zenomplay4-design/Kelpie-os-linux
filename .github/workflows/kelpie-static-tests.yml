@@ -33,6 +33,7 @@ jobs:
         run: |
           bash -n debian-live/preflight.sh
           bash -n debian-live/validate-packages.sh
+          bash -n debian-live/validate-iso.sh
           bash -n debian-live/build-in-container.sh
           sh -n debian-live/config/hooks/normal/0200-kelpie-branding.hook.chroot
           sh -n debian-live/config/hooks/normal/0300-kelpie-dconf.hook.chroot
