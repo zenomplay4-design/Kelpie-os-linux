@@ -1,0 +1,10 @@
+#!/bin/sh
+set -eu
+
+# Compile the system dconf profile for all newly created users.
+if command -v dconf >/dev/null 2>&1; then
+    dconf update
+else
+    echo "Kelpie V3: dconf command missing; cannot compile system defaults" >&2
+    exit 1
+fi
