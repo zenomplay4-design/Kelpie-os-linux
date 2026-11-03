@@ -23,8 +23,8 @@ class KelpieUtilityTests(unittest.TestCase):
             device = Path(temporary) / "card0" / "device"
             hwmon = device / "hwmon" / "hwmon0"
             hwmon.mkdir(parents=True)
-            (device / "gpu_busy_percent").write_text("42\\n", encoding="ascii")
-            (hwmon / "temp1_input").write_text("61500\\n", encoding="ascii")
+            (device / "gpu_busy_percent").write_text("42\n", encoding="ascii")
+            (hwmon / "temp1_input").write_text("61500\n", encoding="ascii")
             self.assertEqual(read_nouveau_gpu_stats(temporary), "GPU 42% · 62 °C")
 
     def test_nouveau_gpu_sysfs_missing_is_safe(self):
