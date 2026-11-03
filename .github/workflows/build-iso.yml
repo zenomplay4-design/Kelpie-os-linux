@@ -14,12 +14,12 @@ permissions:
 
 concurrency:
   group: kelpie-os-v3-iso-fastlane
-  cancel-in-progress: false
+  cancel-in-progress: true
 
 jobs:
   build:
     runs-on: ubuntu-24.04
-    timeout-minutes: 360
+    timeout-minutes: 240
     steps:
       - name: Checkout V3 development branch
         uses: actions/checkout@v4
