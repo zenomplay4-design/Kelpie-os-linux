@@ -37,6 +37,9 @@ jobs:
           sh -n debian-live/config/hooks/normal/0200-kelpie-branding.hook.chroot
           sh -n debian-live/config/hooks/normal/0300-kelpie-dconf.hook.chroot
 
+      - name: Run Kelpie utility unit tests
+        run: PYTHONPATH=debian-live/config/includes.chroot/usr/lib/kelpie python3 -m unittest discover -s debian-live/tests -v
+
       - name: Validate Calamares sequence against Debian Trixie
         run: |
           sudo apt-get update
