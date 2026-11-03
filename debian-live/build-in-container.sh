@@ -45,6 +45,7 @@ mkdir -p \
 cat > /tmp/paw.svg <<'SVG'
 <svg xmlns="http://www.w3.org/2000/svg" width="512" height="512" viewBox="0 0 512 512"><g fill="#fff"><ellipse cx="128" cy="164" rx="54" ry="72"/><ellipse cx="256" cy="112" rx="54" ry="72"/><ellipse cx="384" cy="164" rx="54" ry="72"/><ellipse cx="448" cy="286" rx="48" ry="64"/><path d="M256 220c-94 0-178 105-178 185 0 52 40 78 91 78 35 0 57-17 87-17s52 17 87 17c51 0 91-26 91-78 0-80-84-185-178-185z"/></g></svg>
 SVG
+cp /tmp/paw.svg config/includes.chroot/usr/share/pixmaps/kelpie-paw.svg
 rsvg-convert -w 512 -h 512 /tmp/paw.svg > config/includes.chroot/usr/share/pixmaps/kelpie-paw.png
 cp config/includes.chroot/usr/share/pixmaps/kelpie-paw.png config/includes.chroot/usr/share/pixmaps/kelpie-os-logo.png
 cp config/includes.chroot/usr/share/pixmaps/kelpie-paw.png config/includes.chroot/usr/share/icons/hicolor/128x128/apps/kelpie-os.png
