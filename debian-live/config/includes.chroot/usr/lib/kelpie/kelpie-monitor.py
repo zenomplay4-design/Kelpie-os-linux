@@ -24,6 +24,8 @@ class KelpieMonitor(Gtk.Application):
         self.gpu_value = None
         self.temp_value = None
         self.disk_value = None
+        self.swap_value = None
+        self.uptime_value = None
         self.process_list = None
         self._process_objects = {}
         psutil.cpu_percent(interval=None)
@@ -64,6 +66,8 @@ class KelpieMonitor(Gtk.Application):
         self.gpu_value = self._metric(grid, "Placa de vídeo", 0, 1)
         self.temp_value = self._metric(grid, "Temperaturas", 1, 1)
         self.disk_value = self._metric(grid, "Armazenamento", 0, 2)
+        self.swap_value = self._metric(grid, "Memória swap", 1, 2)
+        self.uptime_value = self._metric(grid, "Tempo ligado", 0, 3)
 
         process_heading = Gtk.Label(label="Processos em execução")
         process_heading.add_css_class("title-3")
@@ -162,6 +166,10 @@ class KelpieMonitor(Gtk.Application):
             cpu = psutil.cpu_percent(interval=None)
             memory = psutil.virtual_memory()
             disk = psutil.disk_usage("/")
+            swap = psutil.swap_memory()
+            uptime_seconds = max(0, int(psutil.boot_time() and (__import__("time").time() - psutil.boot_time())))
+            hours, remainder = divmod(uptime_seconds, 3600)
+            days, hours = divmod(hours, 24)
             self.cpu_value.set_text(f"{cpu:.0f}% de uso · {psutil.cpu_count(logical=True) or '?'} threads")
             self.ram_value.set_text(
                 f"{memory.percent:.0f}% usado · {memory.used / (1024 ** 3):.1f} / "
@@ -173,6 +181,11 @@ class KelpieMonitor(Gtk.Application):
                 f"{disk.percent:.0f}% usado · {disk.used / (1024 ** 3):.1f} / "
                 f"{disk.total / (1024 ** 3):.1f} GB"
             )
+            self.swap_value.set_text(
+                f"{swap.percent:.0f}% usado · {swap.used / (1024 ** 3):.1f} / "
+                f"{swap.total / (1024 ** 3):.1f} GB"
+            )
+            self.uptime_value.set_text(f"{days} dia(s), {hours} h e {remainder // 60} min")
             self._refresh_processes()
         except (psutil.Error, OSError, RuntimeError) as error:
             self.gpu_value.set_text(f"Leitura parcial: {error}")
@@ -191,7 +204,9 @@ class KelpieMonitor(Gtk.Application):
             try:
                 info = proc.info
                 pid = int(info.get("pid") or 0)
-                process = self._process_objects.get(pid) or psutil.Process(pid)
+                process = self._process_objects.get(pid)
+                if process is None or process.create_time() != psutil.Process(pid).create_time():
+                    process = psutil.Process(pid)
                 active[pid] = process
                 processes.append(
                     (
@@ -205,7 +220,7 @@ class KelpieMonitor(Gtk.Application):
                 continue
         self._process_objects = active
 
-        for cpu, pid, name, memory in sorted(processes, reverse=True)[:12]:
+        for cpu, pid, name, memory in sorted(processes, key=lambda item: (item[0], item[3]), reverse=True)[:15]:
             row = Gtk.Box(orientation=Gtk.Orientation.HORIZONTAL, spacing=12)
             row.set_margin_top(7)
             row.set_margin_bottom(7)
