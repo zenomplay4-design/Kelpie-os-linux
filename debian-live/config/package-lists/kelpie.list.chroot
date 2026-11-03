@@ -85,7 +85,7 @@ power-profiles-daemon
 lm-sensors
 powertop
 
-# Firmware e gráficos: Nouveau e firmware NVIDIA; driver proprietário fica fora da ISO até validação de segurança
+# Firmware e gráficos: Nouveau como fallback + driver proprietário para Maxwell (GTX 750)
 firmware-linux
 firmware-linux-nonfree
 firmware-misc-nonfree
@@ -99,6 +99,12 @@ mesa-vulkan-drivers
 mesa-utils
 xserver-xorg-video-nouveau
 nvidia-detect
+# Driver proprietário Debian 13 (550.x): suporta Maxwell; módulo fechado via DKMS
+nvidia-driver
+nvidia-kernel-dkms
+nvidia-settings
+dkms
+linux-headers-amd64
 
 # Instalador e ferramentas do sistema
 debian-installer-launcher
