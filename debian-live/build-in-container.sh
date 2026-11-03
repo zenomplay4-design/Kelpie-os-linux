@@ -2,9 +2,6 @@
 set -Eeuo pipefail
 export DEBIAN_FRONTEND=noninteractive
 
-# Catch missing files and malformed scripts before spending time on package setup.
-bash /src/preflight.sh
-
 # Use the complete Debian 13 archive components, including firmware and NVIDIA.
 mkdir -p /etc/apt/sources.list.d
 cat > /etc/apt/sources.list.d/debian.sources <<'EOF'
@@ -26,6 +23,9 @@ apt-get install -y --no-install-recommends \
   live-build debootstrap xorriso squashfs-tools dosfstools \
   grub-pc-bin grub-efi-amd64-bin mtools isolinux syslinux-common \
   ca-certificates file librsvg2-bin python3-yaml
+
+# Validate structure and configuration after installing the YAML parser.
+bash /src/preflight.sh
 
 # Fail early if any requested package is unavailable or dependencies conflict.
 bash /src/validate-packages.sh
