@@ -43,6 +43,9 @@ jobs:
           sudo apt-get install -y python3-yaml
           python3 debian-live/validate-calamares.py
 
+      - name: Validate Kelpie AppStream metadata
+        run: python3 debian-live/validate-appstream.py
+
       - name: Validate GNOME extension metadata
         run: |
           python3 -m json.tool \
