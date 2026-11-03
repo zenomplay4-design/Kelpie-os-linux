@@ -9,4 +9,6 @@ if command -v flatpak >/dev/null 2>&1; then
   flatpak remote-add --if-not-exists --system flathub https://flathub.org/repo/flathub.flatpakrepo || true
 fi
 if command -v dconf >/dev/null 2>&1; then dconf update; fi
+# Enable AppArmor in the installed system without starting services in the build chroot.
+if command -v systemctl >/dev/null 2>&1; then systemctl --root=/ enable apparmor.service || true; fi
 if command -v gtk-update-icon-cache >/dev/null 2>&1; then gtk-update-icon-cache -f /usr/share/icons/hicolor || true; fi
