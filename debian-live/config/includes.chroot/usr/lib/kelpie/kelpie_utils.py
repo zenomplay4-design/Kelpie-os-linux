@@ -20,3 +20,30 @@ def format_size(value):
             return f"{amount:.0f} {unit}" if unit == "B" else f"{amount:.1f} {unit}"
         amount /= 1000
     return f"{amount:.1f} PB"
+
+
+def read_nouveau_gpu_stats(drm_root="/sys/class/drm"):
+    """Read GPU busy percentage and temperature from Nouveau sysfs when exposed."""
+    from pathlib import Path
+    root = Path(drm_root)
+    readings = []
+    for device in sorted(root.glob("card[0-9]*/device")):
+        values = []
+        busy = device / "gpu_busy_percent"
+        try:
+            if busy.is_file():
+                value = float(busy.read_text(encoding="ascii").strip())
+                if 0 <= value <= 100:
+                    values.append(f"GPU {value:.0f}%")
+        except (OSError, ValueError):
+            pass
+        for sensor in sorted((device / "hwmon").glob("hwmon*/temp1_input"))[:1]:
+            try:
+                temp = int(sensor.read_text(encoding="ascii").strip())
+                if -40000 <= temp <= 150000:
+                    values.append(f"{temp / 1000:.0f} °C")
+            except (OSError, ValueError):
+                pass
+        if values:
+            readings.append(" · ".join(values))
+    return " · ".join(readings[:2]) if readings else "Métricas Nouveau indisponíveis"
