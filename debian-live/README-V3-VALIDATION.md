@@ -19,11 +19,11 @@
 
 ## Aplicativos Kelpie em desenvolvimento
 
-- **Kelpie Monitor:** primeira versão GTK4 para CPU, memória, GPU, temperaturas, discos e processos. Ainda precisa de teste em sessão GNOME real.
-- **Kelpie Update:** primeira versão GTK4 para atualizar listas APT, simular atualizações disponíveis, pedir confirmação e autenticação administrativa, instalar atualizações padrão e guardar log em `~/.local/state/kelpie/update.log`. Não executa `full-upgrade` nem remoção automática de pacotes. Ainda precisa de testes de runtime.
+- **Kelpie Monitor:** aplicação GTK4 para CPU, memória, GPU, temperaturas, discos, swap, uptime e processos. Os testes de sintaxe passam; ainda precisa de teste em sessão GNOME real.
+- **Kelpie Update:** aplicação GTK4 para atualizar listas APT, simular atualizações disponíveis, liberar instalação somente quando a simulação lista pacotes atualizáveis, pedir confirmação e autenticação administrativa, instalar atualizações padrão e guardar log em `~/.local/state/kelpie/update.log`. Não executa `full-upgrade` nem remoção automática de pacotes. Ainda precisa de testes de runtime.
 
-- **Kelpie Disk:** primeira versão GTK4 de inventário somente leitura usando `lsblk`; mostra dispositivos, partições, tamanho, sistema de arquivos, rótulos, UUIDs e pontos de montagem. Não formata, apaga, redimensiona nem monta volumes.
-- **Kelpie Tweaks:** primeira versão GTK4 para esquema claro/escuro, animações, alto contraste e escala de texto, com restauração dos padrões do usuário. Não implementa ainda blur/glassmorphism; isso permanece como trabalho separado.
+- **Kelpie Disk:** aplicação GTK4 de inventário somente leitura usando `lsblk`; mostra dispositivos, partições, tamanho, sistema de arquivos, rótulos, UUIDs e pontos de montagem. Não formata, apaga, redimensiona nem monta volumes.
+- **Kelpie Tweaks:** aplicação GTK4 para esquema claro/escuro, animações, alto contraste, escala de texto e opacidade do dock, com restauração dos padrões do usuário. Não implementa ainda blur/glassmorphism; isso permanece como trabalho separado.
 
 ## Gráficos NVIDIA
 
@@ -34,11 +34,15 @@ A imagem mantém Nouveau como fallback. O driver proprietário NVIDIA não é in
 - Atualização periódica das listas APT.
 - Instalação automática de atualizações permitidas pela configuração padrão Debian de unattended-upgrades.
 - AppArmor incluído e habilitado para iniciar no primeiro boot.
-- UFW/GUFW incluídos, mas o firewall não é ativado automaticamente nesta fase para evitar bloquear conexões e compartilhamentos sem uma política definida.
+- UFW/GUFW incluídos. O UFW está configurado para iniciar no primeiro boot, bloquear conexões de entrada por padrão e permitir conexões de saída; o compartilhamento de serviços deve ser liberado pelo usuário quando necessário.
 
 ## Instalador gráfico
 
 O Calamares e o pacote de configurações Debian são incluídos, com configuração própria em `/etc/calamares`, branding escuro/cobre e a pata gerada no build. A confirmação antes da fase de instalação está habilitada. Isso ainda não comprova que a instalação funciona: é obrigatório testar o particionamento e o bootloader em discos virtuais descartáveis e em hardware real.
+
+## Testes automatizados
+
+O workflow estático compila os quatro aplicativos Python, valida shell/YAML/AppStream/Calamares e executa testes unitários das funções compartilhadas de formatação e detecção de atualizações. Esses testes não substituem execução GTK no GNOME.
 
 ## Compilação de desenvolvimento
 
