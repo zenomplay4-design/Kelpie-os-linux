@@ -10,6 +10,8 @@ from typing import Optional
 import psutil
 import gi
 
+from kelpie_utils import read_nouveau_gpu_stats
+
 gi.require_version("Gtk", "4.0")
 from gi.repository import Gtk, GLib
 
@@ -110,6 +112,9 @@ class KelpieMonitor(Gtk.Application):
     @staticmethod
     def _gpu_status() -> str:
         if not shutil.which("nvidia-smi"):
+            nouveau = read_nouveau_gpu_stats()
+            if nouveau != "Métricas Nouveau indisponíveis":
+                return "Nouveau · " + nouveau
             if shutil.which("lspci"):
                 try:
                     result = subprocess.run(
