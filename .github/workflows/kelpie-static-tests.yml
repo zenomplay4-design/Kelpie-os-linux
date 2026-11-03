@@ -49,6 +49,18 @@ jobs:
       - name: Validate Kelpie AppStream metadata
         run: python3 debian-live/validate-appstream.py
 
+      - name: Validate official wallpaper asset
+        run: |
+          python3 - <<'PY'
+          import xml.etree.ElementTree as ET
+          from pathlib import Path
+          path = Path("debian-live/assets/kelpie-constellation.svg")
+          root = ET.parse(path).getroot()
+          assert root.attrib.get("viewBox") == "0 0 1920 1080", "wallpaper must be 16:9 at 1920x1080 viewBox"
+          assert root.tag.endswith("svg"), "wallpaper must be SVG"
+          print("Official Kelpie constellation wallpaper: valid SVG, 16:9.")
+          PY
+
       - name: Validate GNOME extension metadata
         run: |
           python3 -m json.tool \
