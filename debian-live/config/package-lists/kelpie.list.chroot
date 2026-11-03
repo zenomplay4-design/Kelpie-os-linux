@@ -4,6 +4,7 @@ task-gnome-desktop
 gnome-shell
 gnome-tweaks
 gnome-shell-extensions
+gnome-shell-extension-dashtodock
 gnome-shell-extension-prefs
 gnome-software
 gnome-software-plugin-flatpak
