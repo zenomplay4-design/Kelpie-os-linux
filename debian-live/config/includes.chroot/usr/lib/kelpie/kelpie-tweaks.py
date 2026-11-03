@@ -60,6 +60,16 @@ class KelpieTweaks(Gtk.Application):
         self.add_row(root, "Transparência do dock", "Ajuste a opacidade do fundo da barra inferior.", opacity_box)
         self.opacity.connect("value-changed", self.on_opacity_changed)
 
+        self.dock_fixed = Gtk.Switch(active=self.dock.get_boolean("dock-fixed"))
+        self.dock_fixed.set_valign(Gtk.Align.CENTER)
+        self.add_row(root, "Dock sempre visível", "Mantém a barra inferior fixa na tela.", self.dock_fixed)
+        self.dock_fixed.connect("notify::active", self.on_dock_fixed_changed)
+
+        self.dock_autohide = Gtk.Switch(active=self.dock.get_boolean("autohide"))
+        self.dock_autohide.set_valign(Gtk.Align.CENTER)
+        self.add_row(root, "Ocultar dock automaticamente", "Oculta a barra quando necessário.", self.dock_autohide)
+        self.dock_autohide.connect("notify::active", self.on_dock_autohide_changed)
+
         self.contrast = Gtk.Switch(active=self.a11y.get_boolean("high-contrast"))
         self.contrast.set_valign(Gtk.Align.CENTER)
         self.add_row(root, "Alto contraste", "Aumenta a distinção visual dos elementos.", self.contrast)
@@ -124,6 +134,14 @@ class KelpieTweaks(Gtk.Application):
         self.opacity_value.set_text(f"{value:.0%}")
         self.notify_saved("Transparência do dock atualizada.")
 
+    def on_dock_fixed_changed(self, *_):
+        self.dock.set_boolean("dock-fixed", self.dock_fixed.get_active())
+        self.notify_saved("Comportamento fixo do dock atualizado.")
+
+    def on_dock_autohide_changed(self, *_):
+        self.dock.set_boolean("autohide", self.dock_autohide.get_active())
+        self.notify_saved("Ocultação automática do dock atualizada.")
+
     def on_contrast_changed(self, *_):
         self.a11y.set_boolean("high-contrast", self.contrast.get_active())
         self.notify_saved("Preferência de contraste atualizada.")
@@ -140,10 +158,14 @@ class KelpieTweaks(Gtk.Application):
         self.settings.set_double("text-scaling-factor", 1.0)
         self.a11y.set_boolean("high-contrast", False)
         self.dock.set_double("background-opacity", 0.28)
+        self.dock.set_boolean("dock-fixed", True)
+        self.dock.set_boolean("autohide", False)
         self.theme.set_selected(0)
         self.animations.set_active(True)
         self.contrast.set_active(False)
         self.opacity.set_value(0.28)
+        self.dock_fixed.set_active(True)
+        self.dock_autohide.set_active(False)
         self.scale.set_value(1.0)
         self.notify_saved("Padrões restaurados.")
 
