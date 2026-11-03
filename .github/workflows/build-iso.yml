@@ -2,6 +2,12 @@ name: Build Kelpie OS Linux V3 ISO
 
 on:
   workflow_dispatch:
+  push:
+    branches:
+      - v3-development
+    paths:
+      - 'debian-live/**'
+      - '.github/workflows/build-iso.yml'
 
 permissions:
   contents: read
