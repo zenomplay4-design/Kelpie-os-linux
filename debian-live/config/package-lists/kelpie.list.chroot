@@ -100,5 +100,7 @@ nvidia-detect
 
 # Instalador e ferramentas do sistema
 debian-installer-launcher
+calamares
+calamares-settings-debian
 zenity
 dconf-cli
