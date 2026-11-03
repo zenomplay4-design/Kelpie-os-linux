@@ -5,6 +5,7 @@ import * as Main from 'resource:///org/gnome/shell/ui/main.js';
 
 export default class KelpieMenuExtension extends Extension {
   enable() {
+    this.loadStylesheet();
     this.button = new St.Button({
       style_class: 'panel-button kelpie-menu-button',
       reactive: true,
@@ -26,5 +27,6 @@ export default class KelpieMenuExtension extends Extension {
     this.button?.destroy();
     this.button = null;
     this.icon = null;
+    this.unloadStylesheet();
   }
 }
