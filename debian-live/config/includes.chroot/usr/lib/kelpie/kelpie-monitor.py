@@ -10,7 +10,7 @@ from typing import Optional
 import psutil
 import gi
 
-from kelpie_utils import read_nouveau_gpu_stats
+from kelpie_utils import read_cpu_model, read_nouveau_gpu_stats
 
 gi.require_version("Gtk", "4.0")
 from gi.repository import Gtk, GLib
@@ -176,16 +176,21 @@ class KelpieMonitor(Gtk.Application):
             uptime_seconds = max(0, int(time.time() - psutil.boot_time()))
             hours, remainder = divmod(uptime_seconds, 3600)
             days, hours = divmod(hours, 24)
-            self.cpu_value.set_text(f"{cpu:.0f}% de uso · {psutil.cpu_count(logical=True) or '?'} threads")
+            cpu_model = read_cpu_model()
+            physical_cores = psutil.cpu_count(logical=False) or "?"
+            logical_cores = psutil.cpu_count(logical=True) or "?"
+            self.cpu_value.set_text(
+                f"{cpu_model} · {cpu:.0f}% de uso · {physical_cores} núcleos / {logical_cores} threads"
+            )
             self.ram_value.set_text(
-                f"{memory.percent:.0f}% usado · {memory.used / (1024 ** 3):.1f} / "
-                f"{memory.total / (1024 ** 3):.1f} GB"
+                f"{memory.percent:.0f}% usado · {memory.used / (1024 ** 3):.1f} GB usados · "
+                f"{memory.available / (1024 ** 3):.1f} GB livres de {memory.total / (1024 ** 3):.1f} GB"
             )
             self.gpu_value.set_text(self._gpu_status())
             self.temp_value.set_text(self._temperatures())
             self.disk_value.set_text(
-                f"{disk.percent:.0f}% usado · {disk.used / (1024 ** 3):.1f} / "
-                f"{disk.total / (1024 ** 3):.1f} GB"
+                f"{disk.percent:.0f}% usado · {disk.free / (1024 ** 3):.1f} GB livres · "
+                f"{disk.used / (1024 ** 3):.1f} / {disk.total / (1024 ** 3):.1f} GB"
             )
             self.swap_value.set_text(
                 f"{swap.percent:.0f}% usado · {swap.used / (1024 ** 3):.1f} / "
