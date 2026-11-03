@@ -12,17 +12,23 @@ need_dir() { [[ -d "$1" ]] || fail "diretório ausente: ${1#"$ROOT"/}"; }
 echo "Kelpie OS V3 — verificações pré-compilação"
 need_file "$ROOT/build-in-container.sh"
 need_file "$ROOT/validate-packages.sh"
+need_file "$ROOT/README-V3-VALIDATION.md"
 need_file "$CONFIG/package-lists/kelpie.list.chroot"
 need_file "$CONFIG/hooks/normal/0200-kelpie-branding.hook.chroot"
+need_file "$CONFIG/includes.chroot/etc/apt/apt.conf.d/20auto-upgrades"
 need_file "$CONFIG/includes.chroot/etc/dconf/db/local.d/00-kelpie"
 need_file "$CONFIG/includes.chroot/usr/share/gnome-shell/extensions/kelpie-menu@kelpieos.local/extension.js"
 need_file "$CONFIG/includes.chroot/usr/share/gnome-shell/extensions/kelpie-menu@kelpieos.local/metadata.json"
 need_dir "$CONFIG/includes.chroot/usr/share/gnome-shell/extensions/kelpie-menu@kelpieos.local"
 
+bash -n "$ROOT/preflight.sh" || fail "sintaxe Bash inválida em preflight.sh"
 bash -n "$ROOT/build-in-container.sh" || fail "sintaxe Bash inválida em build-in-container.sh"
 bash -n "$ROOT/validate-packages.sh" || fail "sintaxe Bash inválida em validate-packages.sh"
 sh -n "$CONFIG/hooks/normal/0200-kelpie-branding.hook.chroot" || fail "sintaxe POSIX shell inválida no hook de identidade"
 
+if ! grep -q 'APT::Periodic::Unattended-Upgrade "1"' "$CONFIG/includes.chroot/etc/apt/apt.conf.d/20auto-upgrades"; then
+  fail "atualizações automáticas de segurança não estão habilitadas"
+fi
 if ! grep -q 'kelpie-menu@kelpieos.local' "$CONFIG/includes.chroot/etc/dconf/db/local.d/00-kelpie"; then
   fail "extensão Kelpie não está habilitada no dconf"
 fi
