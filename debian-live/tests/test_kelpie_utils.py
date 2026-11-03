@@ -2,7 +2,7 @@ import tempfile
 import unittest
 from pathlib import Path
 
-from kelpie_utils import format_size, has_upgradable_packages, read_nouveau_gpu_stats
+from kelpie_utils import format_size, has_upgradable_packages, read_cpu_model, read_nouveau_gpu_stats
 
 
 class KelpieUtilityTests(unittest.TestCase):
@@ -30,6 +30,16 @@ class KelpieUtilityTests(unittest.TestCase):
     def test_nouveau_gpu_sysfs_missing_is_safe(self):
         with tempfile.TemporaryDirectory() as temporary:
             self.assertEqual(read_nouveau_gpu_stats(temporary), "Métricas Nouveau indisponíveis")
+
+    def test_cpu_model_is_detected(self):
+        with tempfile.TemporaryDirectory() as temporary:
+            cpuinfo = Path(temporary) / "cpuinfo"
+            cpuinfo.write_text("model name : Intel Xeon E5-2640 v3\n", encoding="utf-8")
+            self.assertEqual(read_cpu_model(cpuinfo), "Intel Xeon E5-2640 v3")
+
+    def test_cpu_model_missing_file_uses_fallback(self):
+        with tempfile.TemporaryDirectory() as temporary:
+            self.assertEqual(read_cpu_model(Path(temporary) / "missing"), "Modelo não identificado")
 
     def test_invalid_size_is_safe(self):
         self.assertEqual(format_size(None), "Tamanho desconhecido")
