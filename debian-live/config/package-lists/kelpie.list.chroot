@@ -99,13 +99,16 @@ mesa-vulkan-drivers
 mesa-utils
 xserver-xorg-video-nouveau
 nvidia-detect
-# Driver proprietário Debian 13 (550.x): suporta Maxwell; módulo fechado via DKMS
+# Driver proprietário NVIDIA 550 de trixie-backports: variante corrigida para kernel 6.18 e Maxwell (GTX 750); módulo fechado via DKMS
 nvidia-driver
 nvidia-kernel-dkms
 nvidia-settings
 nvidia-persistenced
 dkms
 linux-headers-amd64
+# Kernel LTS 6.18 do Debian backports (linha usada também pelo Manjaro); o kernel padrão Debian permanece como fallback
+linux-image-6.18.15+deb13-amd64
+linux-headers-6.18.15+deb13-amd64
 
 # Instalador e ferramentas do sistema
 debian-installer-launcher
