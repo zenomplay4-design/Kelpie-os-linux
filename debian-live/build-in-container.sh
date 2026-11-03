@@ -30,22 +30,6 @@ apt-get install -y --no-install-recommends \
   grub-pc-bin grub-efi-amd64-bin mtools isolinux syslinux-common \
   ca-certificates file librsvg2-bin python3-yaml
 
-# Use Debian's signed backports repository for the 6.18 LTS kernel and its
-# Maxwell-compatible proprietary NVIDIA DKMS build. Keep the base kernel as fallback.
-mkdir -p /src/config/archives
-cat > /src/config/archives/trixie-backports.list.chroot <<'EOF'
-deb http://deb.debian.org/debian trixie-backports main contrib non-free non-free-firmware
-EOF
-cat > /src/config/archives/trixie-backports.pref.chroot <<'EOF'
-Package: nvidia-driver nvidia-kernel-dkms nvidia-settings nvidia-persistenced
-Pin: release n=trixie-backports
-Pin-Priority: 990
-
-Package: *
-Pin: release n=trixie-backports
-Pin-Priority: 100
-EOF
-
 # Validate structure and configuration after installing the YAML parser.
 bash /src/preflight.sh
 python3 /src/validate-appstream.py
@@ -55,6 +39,23 @@ bash /src/validate-packages.sh
 
 mkdir -p /build /out
 cp -a /src/config /build/config
+
+# The source tree is intentionally mounted read-only by CI. Generate live-build
+# archive configuration in the writable build copy, never under /src.
+mkdir -p /build/config/archives
+cat > /build/config/archives/trixie-backports.list.chroot <<'EOF'
+deb http://deb.debian.org/debian trixie-backports main contrib non-free non-free-firmware
+EOF
+cat > /build/config/archives/trixie-backports.pref.chroot <<'EOF'
+Package: nvidia-driver nvidia-kernel-dkms nvidia-settings nvidia-persistenced linux-image-amd64 linux-headers-amd64
+Pin: release n=trixie-backports
+Pin-Priority: 990
+
+Package: *
+Pin: release n=trixie-backports
+Pin-Priority: 100
+EOF
+
 cd /build
 
 mkdir -p \
