@@ -26,6 +26,7 @@ apt-get install -y --no-install-recommends \
 
 # Validate structure and configuration after installing the YAML parser.
 bash /src/preflight.sh
+python3 /src/validate-appstream.py
 
 # Fail early if any requested package is unavailable or dependencies conflict.
 bash /src/validate-packages.sh
