@@ -1,0 +1,8 @@
+[Desktop Entry]
+Name=Sobre o Kelpie OS
+Comment=Informações do sistema Kelpie OS
+Exec=zenity --info --title='Kelpie OS' --text='Kelpie OS Linux — Debian 13 Trixie com GNOME.'
+Icon=kelpie-os
+Terminal=false
+Type=Application
+Categories=System;
