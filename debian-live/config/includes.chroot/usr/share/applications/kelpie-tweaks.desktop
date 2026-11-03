@@ -1,0 +1,11 @@
+[Desktop Entry]
+Name=Kelpie Tweaks
+Name[pt_BR]=Personalização Kelpie
+Comment=Personalizar aparência e acessibilidade do GNOME
+Comment[pt_BR]=Personalizar aparência e acessibilidade do GNOME
+Exec=/usr/bin/python3 /usr/lib/kelpie/kelpie-tweaks.py
+Icon=preferences-desktop-theme
+Terminal=false
+Type=Application
+Categories=Settings;DesktopSettings;
+StartupNotify=true
