@@ -24,9 +24,11 @@ need_file "$CONFIG/includes.chroot/usr/share/applications/kelpie-install.desktop
 need_file "$CONFIG/includes.chroot/usr/share/applications/kelpie-monitor.desktop"
 need_file "$CONFIG/includes.chroot/usr/share/applications/kelpie-update.desktop"
 need_file "$CONFIG/includes.chroot/usr/share/applications/kelpie-tweaks.desktop"
+need_file "$CONFIG/includes.chroot/usr/share/applications/kelpie-disk.desktop"
 need_file "$CONFIG/includes.chroot/usr/lib/kelpie/kelpie-monitor.py"
 need_file "$CONFIG/includes.chroot/usr/lib/kelpie/kelpie-update.py"
 need_file "$CONFIG/includes.chroot/usr/lib/kelpie/kelpie-tweaks.py"
+need_file "$CONFIG/includes.chroot/usr/lib/kelpie/kelpie-disk.py"
 need_file "$CONFIG/includes.chroot/usr/share/gnome-shell/extensions/kelpie-menu@kelpieos.local/extension.js"
 need_file "$CONFIG/includes.chroot/usr/share/gnome-shell/extensions/kelpie-menu@kelpieos.local/metadata.json"
 need_dir "$CONFIG/includes.chroot/usr/share/gnome-shell/extensions/kelpie-menu@kelpieos.local"
@@ -41,6 +43,7 @@ if command -v python3 >/dev/null 2>&1; then
   PYTHONPYCACHEPREFIX=/tmp/kelpie-pycache python3 -m py_compile "$CONFIG/includes.chroot/usr/lib/kelpie/kelpie-monitor.py" || fail "sintaxe Python inválida no Kelpie Monitor"
   PYTHONPYCACHEPREFIX=/tmp/kelpie-pycache python3 -m py_compile "$CONFIG/includes.chroot/usr/lib/kelpie/kelpie-update.py" || fail "sintaxe Python inválida no Kelpie Update"
   PYTHONPYCACHEPREFIX=/tmp/kelpie-pycache python3 -m py_compile "$CONFIG/includes.chroot/usr/lib/kelpie/kelpie-tweaks.py" || fail "sintaxe Python inválida no Kelpie Tweaks"
+  PYTHONPYCACHEPREFIX=/tmp/kelpie-pycache python3 -m py_compile "$CONFIG/includes.chroot/usr/lib/kelpie/kelpie-disk.py" || fail "sintaxe Python inválida no Kelpie Disk"
   ROOT="$ROOT" python3 - <<'PY' || fail "configurações YAML do Calamares inválidas"
 import os
 import yaml
