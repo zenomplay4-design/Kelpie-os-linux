@@ -2,8 +2,11 @@
 set -e
 OSR=/usr/lib/os-release
 [ -f "$OSR" ] || OSR=/etc/os-release
-sed -i 's/^PRETTY_NAME=.*/PRETTY_NAME="Kelpie OS Linux (Debian GNU\/Linux 13 Trixie)"/' "$OSR"
+sed -i 's/^PRETTY_NAME=.*/PRETTY_NAME="Kelpie OS Linux V2 (Debian GNU\/Linux 13 Trixie)"/' "$OSR"
 sed -i 's/^NAME=.*/NAME="Kelpie OS Linux"/' "$OSR"
 chmod -R a+rX /usr/share/gnome-shell/extensions/kelpie-menu@kelpieos.local /usr/share/backgrounds/kelpie
+if command -v flatpak >/dev/null 2>&1; then
+  flatpak remote-add --if-not-exists --system flathub https://flathub.org/repo/flathub.flatpakrepo || true
+fi
 if command -v dconf >/dev/null 2>&1; then dconf update; fi
 if command -v gtk-update-icon-cache >/dev/null 2>&1; then gtk-update-icon-cache -f /usr/share/icons/hicolor || true; fi
