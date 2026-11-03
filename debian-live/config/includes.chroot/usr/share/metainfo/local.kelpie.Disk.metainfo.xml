@@ -2,7 +2,7 @@
 <component type="desktop-application">
   <id>local.kelpie.Disk</id>
   <name>Kelpie Disk</name>
-  <summary>Consulte discos e partições em modo somente leitura</summary>
+  <summary>Inspect disks and partitions in read-only mode</summary>
   <summary xml:lang="pt_BR">Consulte discos e partições em modo somente leitura</summary>
   <description>
     <p>Exibe inventário de dispositivos de armazenamento, partições, sistemas de arquivos, tamanhos, modelos e pontos de montagem. Não formata nem altera discos.</p>
