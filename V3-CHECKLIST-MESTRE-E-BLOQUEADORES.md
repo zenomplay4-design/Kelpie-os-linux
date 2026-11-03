@@ -25,8 +25,9 @@ Legenda:
 - [x] Pacotes de firmware Wi-Fi Intel, Realtek, Atheros, Broadcom e MediaTek declarados.
 - [x] Microcode Intel incluído em lista adicional.
 - [x] Nouveau definido como fallback gráfico.
-- [ ] Testar detecção de CPU, RAM, placa-mãe, discos, USB, áudio, rede, Bluetooth e monitores.
-- [ ] Testar GTX 750 2 GB (Maxwell) com Nouveau em sessão GNOME.
+- [x] Criar matriz padronizada de validação de hardware e coleta de evidências para o perfil-alvo.
+- [ ] Testar detecção de CPU, RAM, placa-mãe, discos, USB, áudio, rede, Bluetooth e monitores em VM/hardware real.
+- [ ] Testar GTX 750 2 GB (Maxwell) com Nouveau em sessão GNOME, conforme matriz de hardware.
 - [ ] Validar um driver NVIDIA proprietário compatível, mantido e seguro para Maxwell; não instalar automaticamente antes dessa validação.
 - [ ] Testar aceleração 3D, Vulkan/OpenGL, reprodução de vídeo e suspensão/resume com a GTX 750.
 - [ ] Testar Wi-Fi, Ethernet, Bluetooth, áudio, impressoras, scanners e dispositivos USB em hardware real.
