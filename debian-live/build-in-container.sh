@@ -51,6 +51,8 @@ cp config/includes.chroot/usr/share/pixmaps/kelpie-paw.png config/includes.chroo
 cp config/includes.chroot/usr/share/pixmaps/kelpie-paw.png config/includes.chroot/usr/share/icons/hicolor/512x512/apps/kelpie-os.png
 mkdir -p config/includes.chroot/etc/calamares/branding/kelpie
 cp config/includes.chroot/usr/share/pixmaps/kelpie-paw.png config/includes.chroot/etc/calamares/branding/kelpie/kelpie-paw.png
+# Calamares branding.desc references the SVG asset, so ship it beside the branding file.
+cp config/includes.chroot/usr/share/pixmaps/kelpie-paw.svg config/includes.chroot/etc/calamares/branding/kelpie/kelpie-paw.svg
 
 # Temporary constellation wallpaper used until the approved final artwork is added.
 cat > /tmp/wallpaper.svg <<'SVG'
