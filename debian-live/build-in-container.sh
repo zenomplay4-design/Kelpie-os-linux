@@ -28,7 +28,7 @@ apt-get install -y --no-install-recommends \
   ca-certificates file librsvg2-bin python3-yaml
 
 # Fail early if any requested package is unavailable or dependencies conflict.
-bash /src/validate-packages.sh /src/config/package-lists/kelpie.list.chroot
+bash /src/validate-packages.sh
 
 mkdir -p /build /out
 cp -a /src/config /build/config
