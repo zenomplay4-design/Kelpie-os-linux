@@ -12,10 +12,11 @@ class KelpieTweaks(Gtk.Application):
         super().__init__(application_id=APP_ID)
         self.settings = Gio.Settings.new("org.gnome.desktop.interface")
         self.a11y = Gio.Settings.new("org.gnome.desktop.a11y.interface")
+        self.dock = Gio.Settings.new("org.gnome.shell.extensions.dash-to-dock")
 
     def do_activate(self):
         window = Gtk.ApplicationWindow(application=self, title="Kelpie Tweaks")
-        window.set_default_size(560, 500)
+        window.set_default_size(600, 570)
         window.set_resizable(False)
 
         root = Gtk.Box(orientation=Gtk.Orientation.VERTICAL, spacing=14)
@@ -44,8 +45,20 @@ class KelpieTweaks(Gtk.Application):
 
         self.animations = Gtk.Switch(active=self.settings.get_boolean("enable-animations"))
         self.animations.set_valign(Gtk.Align.CENTER)
-        self.add_row(root, "Animações", "Desative para reduzir movimento e efeitos.", self.animations)
+        self.add_row(root, "Animações", "Desative para reduzir movimento e trabalho visual.", self.animations)
         self.animations.connect("notify::active", self.on_animations_changed)
+
+        opacity_box = Gtk.Box(orientation=Gtk.Orientation.HORIZONTAL, spacing=10)
+        self.opacity = Gtk.Scale.new_with_range(Gtk.Orientation.HORIZONTAL, 0.10, 1.0, 0.05)
+        self.opacity.set_hexpand(True)
+        self.opacity.set_digits(2)
+        self.opacity.set_draw_value(False)
+        self.opacity.set_value(self.dock.get_double("background-opacity"))
+        opacity_box.append(self.opacity)
+        self.opacity_value = Gtk.Label(label=f'{self.opacity.get_value():.0%}')
+        opacity_box.append(self.opacity_value)
+        self.add_row(root, "Transparência do dock", "Ajuste a opacidade do fundo da barra inferior.", opacity_box)
+        self.opacity.connect("value-changed", self.on_opacity_changed)
 
         self.contrast = Gtk.Switch(active=self.a11y.get_boolean("high-contrast"))
         self.contrast.set_valign(Gtk.Align.CENTER)
@@ -105,6 +118,12 @@ class KelpieTweaks(Gtk.Application):
         self.settings.set_boolean("enable-animations", self.animations.get_active())
         self.notify_saved("Preferência de animações atualizada.")
 
+    def on_opacity_changed(self, *_):
+        value = round(self.opacity.get_value() * 20) / 20
+        self.dock.set_double("background-opacity", value)
+        self.opacity_value.set_text(f"{value:.0%}")
+        self.notify_saved("Transparência do dock atualizada.")
+
     def on_contrast_changed(self, *_):
         self.a11y.set_boolean("high-contrast", self.contrast.get_active())
         self.notify_saved("Preferência de contraste atualizada.")
@@ -120,9 +139,11 @@ class KelpieTweaks(Gtk.Application):
         self.settings.set_boolean("enable-animations", True)
         self.settings.set_double("text-scaling-factor", 1.0)
         self.a11y.set_boolean("high-contrast", False)
+        self.dock.set_double("background-opacity", 0.28)
         self.theme.set_selected(0)
         self.animations.set_active(True)
         self.contrast.set_active(False)
+        self.opacity.set_value(0.28)
         self.scale.set_value(1.0)
         self.notify_saved("Padrões restaurados.")
 
