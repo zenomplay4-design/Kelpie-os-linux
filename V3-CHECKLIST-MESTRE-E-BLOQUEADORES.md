@@ -59,7 +59,8 @@ Legenda:
 - [ ] Testar Kelpie Monitor em sessão GNOME real, inclusive com Nouveau e sem sensor de temperatura.
 - [x] Criar primeira versão do Kelpie Update em GTK4, com verificação, confirmação, autenticação administrativa e logs locais.
 - [ ] Testar Kelpie Update em sistema instalado, incluindo cancelamento, falha de rede, autenticação negada e atualização concluída.
-- [ ] Desenvolver Kelpie Tweaks (opções visuais e desempenho, com restauração de padrões).
+- [x] Criar primeira versão do Kelpie Tweaks em GTK4 para tema claro/escuro, animações, alto contraste e escala de texto, com restauração de padrões.
+- [ ] Testar Kelpie Tweaks em GNOME 48 e validar persistência das preferências após reiniciar a sessão.
 - [ ] Desenvolver Kelpie Disk (informações e operações de disco com confirmação e proteção contra seleção errada).
 - [ ] Adicionar metadados AppStream, ícones, traduções pt_BR e testes para cada aplicativo Kelpie.
 
@@ -109,7 +110,7 @@ Legenda:
 1. Ainda não existe build de ISO V3 confirmado.
 2. O Calamares personalizado foi integrado ao código, mas ainda precisa de teste de instalação real.
 3. Wallpaper oficial e tela de bloqueio final não foram integrados.
-4. Kelpie Monitor e Kelpie Update já têm primeiras versões de código; Kelpie Tweaks e Kelpie Disk ainda precisam ser desenvolvidos, e os dois apps existentes precisam de testes em sessão GNOME real.
+4. Kelpie Monitor e Kelpie Update já têm primeiras versões de código; Kelpie Disk ainda precisa ser desenvolvido; Monitor, Update e Tweaks precisam de testes em sessão GNOME real.
 5. Compatibilidade NVIDIA da GTX 750 ainda não foi validada no hardware.
 6. Segurança, acessibilidade, recuperação e formatos de apps ainda não passaram por testes de instalação.
 7. Não há relatório de testes em VM nem no computador-alvo.
