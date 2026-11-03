@@ -1,0 +1,35 @@
+---
+componentName: kelpie
+welcomeStyleCalamares: false
+welcomeExpandingLogo: true
+windowExpanding: normal
+windowSize: 1000px,650px
+windowPlacement: center
+sidebar: widget
+navigation: widget
+
+strings:
+  productName: "Kelpie OS Linux"
+  shortProductName: "Kelpie"
+  version: "3 Development"
+  shortVersion: "3"
+  versionedName: "Kelpie OS Linux V3"
+  shortVersionedName: "Kelpie OS V3"
+  bootloaderEntryName: "Kelpie OS Linux"
+  productUrl: ""
+  supportUrl: ""
+  knownIssuesUrl: ""
+  releaseNotesUrl: ""
+  donateUrl: ""
+
+images:
+  productIcon: "kelpie-paw.png"
+  productLogo: "kelpie-paw.png"
+  productWelcome: "kelpie-paw.png"
+
+style:
+  SidebarBackground: "#080d18"
+  SidebarText: "#e8edf5"
+  SidebarTextCurrent: "#ffffff"
+  SidebarBackgroundCurrent: "#8b5638"
+  SidebarTextHighlight: "#d89b70"
