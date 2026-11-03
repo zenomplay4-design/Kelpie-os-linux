@@ -107,7 +107,7 @@ Legenda:
 - [x] Executar validação APT de metadados e resolução de dependências: workflow de validação concluído com sucesso.
 - [x] Validar wallpaper oficial 16:9 no workflow de testes estáticos (run 70, sucesso).
 - [x] Validar sintaxe Python, scripts shell, testes unitários, sequência Calamares e metadados AppStream no workflow estático (run 70, sucesso).
-- [ ] Compilar ISO candidata no GitHub Actions.
+- [ ] Compilar ISO candidata no GitHub Actions (nova execução disparada após ajuste de recuperação do workflow).
 - [ ] Conferir checksum SHA256 e integridade da ISO.
 - [ ] Inspecionar partições, bootloader, entradas UEFI/BIOS e conteúdo da ISO.
 - [ ] Testar ISO em máquinas virtuais UEFI e BIOS, incluindo instalação.
@@ -130,8 +130,8 @@ A V3 permanece em desenvolvimento até que todos os itens obrigatórios sejam im
 
 ## Evidências CI mais recentes (03/11/2026)
 
-- Branch: `v3-development`; commit atual observado: `577bbc9`.
+- Branch: `v3-development`; commit observado antes do ajuste de recuperação: `176dd094`; ajuste do workflow registrado no commit `93ba1ec`.
 - Testes estáticos run 70: sucesso.
-- Validação Debian Trixie/APT run 93: etapa de validação concluída com sucesso; conferência final do estado do workflow ainda pendente.
-- Build ISO run 36: aguardando execução; ainda não há artefato ISO confirmado.
+- Validação Debian Trixie/APT run 93: concluída com sucesso.
+- Build ISO run 36: permaneceu sem atualização após iniciar a etapa de build; sem artefato ISO. Workflow ajustado para cancelar execuções anteriores concorrentes e limitar cada build a 240 minutos; nova execução deve confirmar recuperação.
 - A aprovação dos workflows não substitui os testes de boot, instalação, sessão GNOME ou hardware real.
