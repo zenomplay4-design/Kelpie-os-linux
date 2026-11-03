@@ -41,7 +41,7 @@ Legenda:
 - [x] Paleta escura com detalhes cobre no CSS da extensão.
 - [x] Pata branca criada pelo processo de build para o menu.
 - [x] Wallpaper de constelação provisório gerado no build.
-- [ ] Substituir wallpaper provisório pela arte oficial aprovada: cão formado por estrelas em céu azul escuro, 16:9, sem texto.
+- [x] Integrar wallpaper oficial de constelação canina em céu azul-escuro, 16:9, sem texto; renderizar em 1920×1080 durante o build e validar o SVG no CI.
 - [ ] Integrar pata no menu de boot/GRUB, não apenas no painel do GNOME.
 - [ ] Adicionar mascote preto com marcações caramelo e peito branco nos locais aprovados, sem substituir a pata como logo.
 - [ ] Implementar blur/glassmorphism real e configurável em painel, dock, menus e central de controle.
@@ -105,6 +105,8 @@ Legenda:
 - [x] Validação APT de nomes e resolução de dependências conectada ao build.
 - [x] Executar pré-verificação no ambiente real de CI: workflow de validação concluído com sucesso.
 - [x] Executar validação APT de metadados e resolução de dependências: workflow de validação concluído com sucesso.
+- [x] Validar wallpaper oficial 16:9 no workflow de testes estáticos (run 70, sucesso).
+- [x] Validar sintaxe Python, scripts shell, testes unitários, sequência Calamares e metadados AppStream no workflow estático (run 70, sucesso).
 - [ ] Compilar ISO candidata no GitHub Actions.
 - [ ] Conferir checksum SHA256 e integridade da ISO.
 - [ ] Inspecionar partições, bootloader, entradas UEFI/BIOS e conteúdo da ISO.
@@ -118,10 +120,18 @@ Legenda:
 
 1. Ainda não existe build de ISO V3 confirmado.
 2. O Calamares personalizado foi integrado ao código e tem plano de teste seguro documentado, mas ainda precisa de teste de instalação em VM e hardware.
-3. Wallpaper oficial e tela de bloqueio final não foram integrados.
+3. Wallpaper oficial já foi integrado e validado no CI; a tela de bloqueio final ainda não foi personalizada nem testada.
 4. Kelpie Monitor e Kelpie Update já têm primeiras versões de código; Kelpie Disk já tem uma primeira versão de inventário somente leitura; Monitor, Update, Tweaks e Disk precisam de testes em sessão GNOME real.
 5. Compatibilidade NVIDIA da GTX 750 ainda não foi validada no hardware.
 6. Segurança, acessibilidade, recuperação e formatos de apps ainda não passaram por testes de instalação.
 7. Não há relatório de testes em VM nem no computador-alvo.
 
 A V3 permanece em desenvolvimento até que todos os itens obrigatórios sejam implementados, testados e documentados.
+
+## Evidências CI mais recentes (03/11/2026)
+
+- Branch: `v3-development`; commit atual observado: `577bbc9`.
+- Testes estáticos run 70: sucesso.
+- Validação Debian Trixie/APT run 93: etapa de validação concluída com sucesso; conferência final do estado do workflow ainda pendente.
+- Build ISO run 36: aguardando execução; ainda não há artefato ISO confirmado.
+- A aprovação dos workflows não substitui os testes de boot, instalação, sessão GNOME ou hardware real.
