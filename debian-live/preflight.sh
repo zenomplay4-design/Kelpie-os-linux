@@ -94,8 +94,25 @@ grep -q '^prompt-install: true$' "$CONFIG/includes.chroot/etc/calamares/settings
 
 test -s "$ROOT/config/archives/trixie-backports.list.chroot" || fail "repositório Debian backports não configurado para o kernel 6.18"
 grep -q 'trixie-backports' "$ROOT/config/archives/trixie-backports.list.chroot" || fail "fonte trixie-backports inválida"
-grep -q '^linux-image-6.18.15+deb13-amd64$' "$CONFIG/package-lists/kelpie.list.chroot" || fail "kernel LTS 6.18 não está incluído"
-grep -q '^linux-headers-6.18.15+deb13-amd64$' "$CONFIG/package-lists/kelpie.list.chroot" || fail "headers do kernel 6.18 não estão incluídos"
+grep -q '^linux-image-amd64
+grep -q 'Pin-Priority: 990' "$ROOT/config/archives/trixie-backports.pref.chroot" || fail "prioridade de kernel/driver backports não está configurada"
+grep -q 'linux-image-amd64 linux-headers-amd64' "$ROOT/config/archives/trixie-backports.pref.chroot" || fail "kernel LTS não está priorizado no backports"
+
+if (( ERRORS > 0 )); then
+  echo "Pré-verificação reprovada: $ERRORS problema(s)." >&2
+  exit 1
+fi
+echo "Pré-verificação estrutural aprovada."
+ "$CONFIG/package-lists/kelpie.list.chroot" || fail "metapacote de kernel não está incluído"
+grep -q '^linux-headers-amd64
+grep -q 'Pin-Priority: 990' "$ROOT/config/archives/trixie-backports.pref.chroot" || fail "prioridade do driver NVIDIA backports não está configurada"
+
+if (( ERRORS > 0 )); then
+  echo "Pré-verificação reprovada: $ERRORS problema(s)." >&2
+  exit 1
+fi
+echo "Pré-verificação estrutural aprovada."
+ "$CONFIG/package-lists/kelpie.list.chroot" || fail "metapacote de headers não está incluído"
 grep -q 'Pin-Priority: 990' "$ROOT/config/archives/trixie-backports.pref.chroot" || fail "prioridade do driver NVIDIA backports não está configurada"
 
 if (( ERRORS > 0 )); then
