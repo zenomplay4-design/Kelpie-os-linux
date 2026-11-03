@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<component type="desktop-application">
+  <id>local.kelpie.Monitor</id>
+  <name>Kelpie Monitor</name>
+  <summary>Monitore CPU, memória, GPU, temperaturas e processos</summary>
+  <summary xml:lang="pt_BR">Monitore CPU, memória, GPU, temperaturas e processos</summary>
+  <description>
+    <p>Ferramenta gráfica leve para acompanhar o uso do processador, memória, GPU NVIDIA quando disponível, sensores, discos e processos.</p>
+  </description>
+  <metadata_license>CC0-1.0</metadata_license>
+  <developer_name>Kelpie OS Project</developer_name>
+  <launchable type="desktop-id">kelpie-monitor.desktop</launchable>
+  <categories><category>System</category><category>Monitor</category></categories>
+</component>
