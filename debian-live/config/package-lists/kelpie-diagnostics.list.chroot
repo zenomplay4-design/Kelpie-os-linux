@@ -2,6 +2,12 @@
 # Pacotes adicionais separados para facilitar auditoria e reduzir acoplamento.
 intel-microcode
 python3-psutil
+python3-gi
+gir1.2-gtk-4.0
+gir1.2-adw-1
+pciutils
+usbutils
+lshw
 btop
 gnome-logs
 mousetweaks
