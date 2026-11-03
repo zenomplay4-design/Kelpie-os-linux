@@ -25,6 +25,7 @@ class KelpieMonitor(Gtk.Application):
         self.temp_value = None
         self.disk_value = None
         self.process_list = None
+        self._process_objects = {}
         psutil.cpu_percent(interval=None)
 
     def do_activate(self):
@@ -104,7 +105,24 @@ class KelpieMonitor(Gtk.Application):
     @staticmethod
     def _gpu_status() -> str:
         if not shutil.which("nvidia-smi"):
-            return "NVIDIA: ferramenta/driver proprietário não detectado"
+            if shutil.which("lspci"):
+                try:
+                    result = subprocess.run(
+                        ["lspci", "-nn"],
+                        capture_output=True,
+                        text=True,
+                        timeout=2,
+                        check=False,
+                    )
+                    devices = [
+                        line.strip() for line in result.stdout.splitlines()
+                        if any(kind in line.lower() for kind in ("vga compatible controller", "3d controller", "display controller"))
+                    ]
+                    if devices:
+                        return " · ".join(devices[:2]) + " · métricas avançadas indisponíveis"
+                except (OSError, subprocess.TimeoutExpired):
+                    pass
+            return "GPU ou driver proprietário não detectado; métricas indisponíveis"
         try:
             result = subprocess.run(
                 [
@@ -168,19 +186,24 @@ class KelpieMonitor(Gtk.Application):
             child = next_child
 
         processes = []
-        for proc in psutil.process_iter(["pid", "name", "memory_percent", "cpu_percent"]):
+        active = {}
+        for proc in psutil.process_iter(["pid", "name", "memory_percent"]):
             try:
                 info = proc.info
+                pid = int(info.get("pid") or 0)
+                process = self._process_objects.get(pid) or psutil.Process(pid)
+                active[pid] = process
                 processes.append(
                     (
-                        float(info.get("cpu_percent") or 0),
-                        int(info.get("pid") or 0),
+                        float(process.cpu_percent(interval=None) or 0),
+                        pid,
                         str(info.get("name") or "Processo"),
                         float(info.get("memory_percent") or 0),
                     )
                 )
             except (psutil.NoSuchProcess, psutil.AccessDenied, psutil.ZombieProcess):
                 continue
+        self._process_objects = active
 
         for cpu, pid, name, memory in sorted(processes, reverse=True)[:12]:
             row = Gtk.Box(orientation=Gtk.Orientation.HORIZONTAL, spacing=12)
