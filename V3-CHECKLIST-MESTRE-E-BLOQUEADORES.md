@@ -12,8 +12,9 @@ Legenda:
 - [x] Imagem híbrida ISO definida no processo live-build.
 - [x] Idioma pt_BR e layout de teclado brasileiro definidos no boot.
 - [x] Adicionar Calamares, configurações Debian de módulos, identidade Kelpie e confirmação antes da fase de instalação.
-- [ ] Validar a configuração Calamares em execução e testar particionamento seguro em UEFI/BIOS.
-- [ ] Testar instalação em disco vazio, instalação manual, dual boot e cancelamento sem perda de dados.
+- [x] Criar plano documentado de testes seguros do Calamares em VMs descartáveis, com critérios para discos-alvo, confirmação e cancelamento.
+- [ ] Validar a configuração Calamares em execução e executar a matriz do plano em UEFI/BIOS.
+- [ ] Testar instalação em disco virtual vazio, particionamento manual, dual boot simulado e cancelamento sem perda de dados.
 - [ ] Testar inicialização UEFI e BIOS legado em máquinas reais/VMs.
 - [ ] Verificar boot em UEFI sem Secure Boot no computador-alvo e documentar limitações com Secure Boot.
 - [ ] Validar modo Live, reinicialização, desligamento e remoção segura do USB.
@@ -115,7 +116,7 @@ Legenda:
 ## Bloqueadores de lançamento atuais
 
 1. Ainda não existe build de ISO V3 confirmado.
-2. O Calamares personalizado foi integrado ao código, mas ainda precisa de teste de instalação real.
+2. O Calamares personalizado foi integrado ao código e tem plano de teste seguro documentado, mas ainda precisa de teste de instalação em VM e hardware.
 3. Wallpaper oficial e tela de bloqueio final não foram integrados.
 4. Kelpie Monitor e Kelpie Update já têm primeiras versões de código; Kelpie Disk já tem uma primeira versão de inventário somente leitura; Monitor, Update, Tweaks e Disk precisam de testes em sessão GNOME real.
 5. Compatibilidade NVIDIA da GTX 750 ainda não foi validada no hardware.
