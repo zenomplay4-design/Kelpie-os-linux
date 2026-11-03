@@ -74,8 +74,9 @@ Legenda:
 - [x] AppArmor incluído e habilitado para iniciar.
 - [x] unattended-upgrades e configuração periódica de atualização incluídos.
 - [x] UFW e GUFW incluídos.
+- [x] Política inicial do UFW definida: entrada bloqueada, saída permitida, IPv6 protegido e serviço habilitado para o primeiro boot.
 - [x] debsums, apt-listchanges e needrestart incluídos.
-- [ ] Definir política inicial do firewall sem bloquear serviços essenciais do usuário.
+- [ ] Testar a política inicial do firewall em sessão real, incluindo navegação, DNS, VPN, descoberta de dispositivos e compartilhamento LAN; documentar exceções necessárias.
 - [ ] Testar atualizações automáticas de segurança, reinicializações pendentes e falhas de atualização.
 - [ ] Validar AppArmor em modo enforce e revisar perfis.
 - [ ] Validar assinatura APT e integridade de pacotes e ISO.
