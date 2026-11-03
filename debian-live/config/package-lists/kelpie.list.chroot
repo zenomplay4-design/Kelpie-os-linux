@@ -21,7 +21,10 @@ file-roller
 pavucontrol
 cups
 system-config-printer
+printer-driver-all
 simple-scan
+bluez
+blueman
 ufw
 gufw
 fwupd
