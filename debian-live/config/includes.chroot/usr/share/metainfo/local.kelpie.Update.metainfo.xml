@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<component type="desktop-application">
+  <id>local.kelpie.Update</id>
+  <name>Kelpie Update</name>
+  <summary>Verifique e instale atualizações do sistema</summary>
+  <summary xml:lang="pt_BR">Verifique e instale atualizações do sistema</summary>
+  <description>
+    <p>Interface gráfica para consultar atualizações APT, simular alterações antes da instalação e registrar operações em log.</p>
+  </description>
+  <metadata_license>CC0-1.0</metadata_license>
+  <developer_name>Kelpie OS Project</developer_name>
+  <launchable type="desktop-id">kelpie-update.desktop</launchable>
+  <categories><category>System</category><category>Settings</category></categories>
+</component>
