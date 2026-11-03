@@ -48,7 +48,7 @@ Legenda:
 - [ ] Incluir opção para reduzir/desativar transparência e blur por desempenho/acessibilidade.
 - [x] Adicionar no Kelpie Tweaks um controle ajustável de opacidade do dock inferior, com restauração do padrão (0,28).
 - [ ] Implementar dock coerente com o design aprovado.
-- [ ] Personalizar tela de bloqueio com wallpaper oficial desfocado, relógio, data e controles nativos.
+- [x] Configurar wallpaper oficial do Kelpie no perfil dconf do GDM para a tela de login/bloqueio; blur, relógio e controles ainda exigem validação visual em sessão.
 - [ ] Testar extensão do menu em GNOME 48 e garantir fallback se ela falhar.
 - [ ] Testar escala, HiDPI, múltiplos monitores, fontes e temas de alto contraste.
 
@@ -120,7 +120,7 @@ Legenda:
 
 1. Ainda não existe build de ISO V3 da revisão atual confirmado; uma revisão anterior (build 30) produziu um artefato de 3,17 GB, ainda não aprovado como release.
 2. O Calamares personalizado foi integrado ao código e tem plano de teste seguro documentado, mas ainda precisa de teste de instalação em VM e hardware.
-3. Wallpaper oficial já foi integrado e validado no CI; a tela de bloqueio final ainda não foi personalizada nem testada.
+3. Wallpaper oficial já foi integrado e validado no CI; GDM agora recebe a configuração do wallpaper Kelpie, mas blur, relógio e controles ainda precisam de teste visual.
 4. Kelpie Monitor e Kelpie Update já têm primeiras versões de código; Kelpie Disk já tem uma primeira versão de inventário somente leitura; Monitor, Update, Tweaks e Disk precisam de testes em sessão GNOME real.
 5. Compatibilidade NVIDIA da GTX 750 ainda não foi validada no hardware.
 6. Segurança, acessibilidade, recuperação e formatos de apps ainda não passaram por testes de instalação.
