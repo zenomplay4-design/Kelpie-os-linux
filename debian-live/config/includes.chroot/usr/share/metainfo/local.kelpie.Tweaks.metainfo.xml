@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<component type="desktop-application">
+  <id>local.kelpie.Tweaks</id>
+  <name>Kelpie Tweaks</name>
+  <summary>Personalize aparência e acessibilidade do GNOME</summary>
+  <summary xml:lang="pt_BR">Personalize aparência e acessibilidade do GNOME</summary>
+  <description>
+    <p>Ajuste preferências reversíveis da interface GNOME, incluindo esquema visual, animações, contraste, escala de texto e transparência do dock.</p>
+  </description>
+  <metadata_license>CC0-1.0</metadata_license>
+  <developer_name>Kelpie OS Project</developer_name>
+  <launchable type="desktop-id">kelpie-tweaks.desktop</launchable>
+  <categories><category>Settings</category><category>DesktopSettings</category></categories>
+</component>
