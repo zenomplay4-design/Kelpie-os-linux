@@ -60,3 +60,19 @@ def read_cpu_model(cpuinfo_path="/proc/cpuinfo"):
     except OSError:
         pass
     return "Modelo não identificado"
+
+
+def calculate_io_rates(previous, current, now):
+    """Return read/write bytes per second from cumulative disk counters."""
+    try:
+        read_bytes, write_bytes = int(current[0]), int(current[1])
+        if previous is None:
+            return None
+        previous_time, previous_read, previous_write = previous
+        elapsed = float(now) - float(previous_time)
+        previous_read, previous_write = int(previous_read), int(previous_write)
+        if elapsed <= 0 or read_bytes < previous_read or write_bytes < previous_write:
+            return None
+        return ((read_bytes - previous_read) / elapsed, (write_bytes - previous_write) / elapsed)
+    except (TypeError, ValueError, IndexError, OverflowError):
+        return None

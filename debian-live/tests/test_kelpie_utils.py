@@ -2,7 +2,7 @@ import tempfile
 import unittest
 from pathlib import Path
 
-from kelpie_utils import format_size, has_upgradable_packages, read_cpu_model, read_nouveau_gpu_stats
+from kelpie_utils import calculate_io_rates, format_size, has_upgradable_packages, read_cpu_model, read_nouveau_gpu_stats
 
 
 class KelpieUtilityTests(unittest.TestCase):
@@ -17,6 +17,14 @@ class KelpieUtilityTests(unittest.TestCase):
         self.assertEqual(format_size(0), "0 B")
         self.assertEqual(format_size(1000), "1.0 KB")
         self.assertEqual(format_size(1_000_000), "1.0 MB")
+
+    def test_disk_io_rates(self):
+        self.assertEqual(calculate_io_rates((10.0, 100, 200), (300, 500), 12.0), (100.0, 150.0))
+
+    def test_disk_io_first_sample_and_counter_reset_are_safe(self):
+        self.assertIsNone(calculate_io_rates(None, (100, 200), 12.0))
+        self.assertIsNone(calculate_io_rates((10.0, 300, 200), (100, 250), 12.0))
+        self.assertIsNone(calculate_io_rates((10.0, 100, 100), (200, 200), 10.0))
 
     def test_nouveau_gpu_sysfs_metrics(self):
         with tempfile.TemporaryDirectory() as temporary:
