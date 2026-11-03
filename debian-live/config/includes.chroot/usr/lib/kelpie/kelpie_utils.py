@@ -47,3 +47,16 @@ def read_nouveau_gpu_stats(drm_root="/sys/class/drm"):
         if values:
             readings.append(" · ".join(values))
     return " · ".join(readings[:2]) if readings else "Métricas Nouveau indisponíveis"
+
+
+def read_cpu_model(cpuinfo_path="/proc/cpuinfo"):
+    """Return the reported CPU model, with a safe fallback."""
+    from pathlib import Path
+    try:
+        for line in Path(cpuinfo_path).read_text(encoding="utf-8", errors="replace").splitlines():
+            key, separator, value = line.partition(":")
+            if separator and key.strip().lower() in ("model name", "hardware") and value.strip():
+                return value.strip()
+    except OSError:
+        pass
+    return "Modelo não identificado"
