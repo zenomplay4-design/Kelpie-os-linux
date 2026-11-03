@@ -13,7 +13,7 @@ permissions:
   contents: read
 
 concurrency:
-  group: kelpie-os-v3-iso-fastlane
+  group: kelpie-os-v3-iso-recovery
   cancel-in-progress: true
 
 jobs:
