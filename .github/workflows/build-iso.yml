@@ -41,7 +41,7 @@ jobs:
         with:
           name: kelpie-os-linux-debian13-amd64
           path: |
-            dist/kelpie-os-linux-debian13-amd64.iso
+            dist/kelpie-os-linux-v2-amd64.iso
             dist/SHA256SUMS
           if-no-files-found: error
           compression-level: 0
