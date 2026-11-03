@@ -40,6 +40,12 @@ A imagem mantém Nouveau como fallback. O driver proprietário NVIDIA não é in
 
 O Calamares e o pacote de configurações Debian são incluídos, com configuração própria em `/etc/calamares`, branding escuro/cobre e a pata gerada no build. A confirmação antes da fase de instalação está habilitada. Isso ainda não comprova que a instalação funciona: é obrigatório testar o particionamento e o bootloader em discos virtuais descartáveis e em hardware real.
 
+## Identidade visual V3
+
+- Ícone oficial: pata branca simples, gerada em SVG/PNG para o menu e o instalador.
+- Wallpaper: constelação de cachorro em céu azul-escuro, proporção 16:9, sem texto; renderização 1920×1080 no build.
+- Interface: tema escuro com detalhes cobre; dock inferior fixo.
+
 ## Testes automatizados
 
 O workflow estático compila os quatro aplicativos Python, valida shell/YAML/AppStream/Calamares e executa testes unitários das funções compartilhadas de formatação e detecção de atualizações. Esses testes não substituem execução GTK no GNOME.
@@ -65,4 +71,4 @@ O workflow estático compila os quatro aplicativos Python, valida shell/YAML/App
 
 ## Limitações conhecidas
 
-A arte definitiva do wallpaper ainda precisa substituir o desenho temporário gerado no build. A extensão de menu GNOME também precisa de teste em sessão real do GNOME 48. A geração da ISO, por si só, não comprova que o instalador ou todos os dispositivos funcionam no computador-alvo.
+A arte oficial do wallpaper em constelação canina 16:9 agora está versionada em `assets/kelpie-constellation.svg` e é renderizada para 1920×1080 durante o build; o arquivo é exigido pelo preflight. O desenho é uma arte vetorial de constelação, não uma fotografia. A extensão de menu GNOME ainda precisa de teste em sessão real do GNOME 48. A geração da ISO, por si só, não comprova que o instalador ou todos os dispositivos funcionam no computador-alvo.
