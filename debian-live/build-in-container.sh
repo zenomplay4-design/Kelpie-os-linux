@@ -16,6 +16,12 @@ URIs: http://deb.debian.org/debian-security
 Suites: trixie-security
 Components: main contrib non-free non-free-firmware
 Signed-By: /usr/share/keyrings/debian-archive-keyring.gpg
+
+Types: deb
+URIs: http://deb.debian.org/debian
+Suites: trixie-backports
+Components: main contrib non-free non-free-firmware
+Signed-By: /usr/share/keyrings/debian-archive-keyring.gpg
 EOF
 
 apt-get update
@@ -23,6 +29,22 @@ apt-get install -y --no-install-recommends \
   live-build debootstrap xorriso squashfs-tools dosfstools \
   grub-pc-bin grub-efi-amd64-bin mtools isolinux syslinux-common \
   ca-certificates file librsvg2-bin python3-yaml
+
+# Use Debian's signed backports repository for the 6.18 LTS kernel and its
+# Maxwell-compatible proprietary NVIDIA DKMS build. Keep the base kernel as fallback.
+mkdir -p /src/config/archives
+cat > /src/config/archives/trixie-backports.list.chroot <<'EOF'
+deb http://deb.debian.org/debian trixie-backports main contrib non-free non-free-firmware
+EOF
+cat > /src/config/archives/trixie-backports.pref.chroot <<'EOF'
+Package: nvidia-driver nvidia-kernel-dkms nvidia-settings nvidia-persistenced
+Pin: release n=trixie-backports
+Pin-Priority: 990
+
+Package: *
+Pin: release n=trixie-backports
+Pin-Priority: 100
+EOF
 
 # Validate structure and configuration after installing the YAML parser.
 bash /src/preflight.sh
