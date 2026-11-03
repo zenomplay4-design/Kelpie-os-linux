@@ -4,7 +4,8 @@ OSR=/usr/lib/os-release
 [ -f "$OSR" ] || OSR=/etc/os-release
 sed -i 's/^PRETTY_NAME=.*/PRETTY_NAME="Kelpie OS Linux V3 (Debian GNU\/Linux 13 Trixie)"/' "$OSR"
 sed -i 's/^NAME=.*/NAME="Kelpie OS Linux"/' "$OSR"
-chmod -R a+rX /usr/share/gnome-shell/extensions/kelpie-menu@kelpieos.local /usr/share/backgrounds/kelpie /etc/calamares
+mkdir -p /usr/share/backgrounds/kelpie /usr/share/pixmaps
+chmod -R a+rX /usr/share/gnome-shell/extensions/kelpie-menu@kelpieos.local /usr/share/backgrounds/kelpie /usr/share/pixmaps /etc/calamares
 # Hide Debian-branded launchers; the Kelpie-branded Calamares entry is provided separately.
 rm -f /usr/share/applications/calamares-install-debian.desktop /usr/share/applications/install-debian.desktop
 if command -v flatpak >/dev/null 2>&1; then
