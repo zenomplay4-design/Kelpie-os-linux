@@ -89,7 +89,36 @@ grep -q 'kelpie-paw.svg' "$CONFIG/includes.chroot/etc/calamares/branding/kelpie/
 test -s "$CONFIG/includes.chroot/usr/share/pixmaps/kelpie-paw.svg" || fail "arquivo vetorial da pata está ausente"
 grep -q '^system-db:gdm$' "$CONFIG/includes.chroot/etc/dconf/profile/gdm" || fail "perfil dconf do GDM não carrega o banco system-db:gdm"
 grep -q "picture-uri='file:///usr/share/backgrounds/kelpie/kelpie-constellation.png'" "$CONFIG/includes.chroot/etc/dconf/db/gdm.d/01-kelpie" || fail "wallpaper Kelpie não configurado para GDM"
-grep -q '^branding: kelpie$' "$CONFIG/includes.chroot/etc/calamares/settings.conf" || fail "Calamares não usa a identidade Kelpie"
+test -s "$ROOT/config/archives/trixie-backports.list.chroot" || fail "repositório Debian backports não configurado para o kernel 6.18"
+grep -q 'trixie-backports' "$ROOT/config/archives/trixie-backports.list.chroot" || fail "fonte trixie-backports inválida"
+grep -q '^linux-image-6.18.15+deb13-amd64
+grep -q '^prompt-install: true$' "$CONFIG/includes.chroot/etc/calamares/settings.conf" || fail "Calamares deve pedir confirmação antes da instalação"
+
+if (( ERRORS > 0 )); then
+  echo "Pré-verificação reprovada: $ERRORS problema(s)." >&2
+  exit 1
+fi
+echo "Pré-verificação estrutural aprovada."
+ "$CONFIG/package-lists/kelpie.list.chroot" || fail "kernel LTS 6.18 não está incluído"
+grep -q '^linux-headers-6.18.15+deb13-amd64
+grep -q '^prompt-install: true$' "$CONFIG/includes.chroot/etc/calamares/settings.conf" || fail "Calamares deve pedir confirmação antes da instalação"
+
+if (( ERRORS > 0 )); then
+  echo "Pré-verificação reprovada: $ERRORS problema(s)." >&2
+  exit 1
+fi
+echo "Pré-verificação estrutural aprovada."
+ "$CONFIG/package-lists/kelpie.list.chroot" || fail "headers do kernel 6.18 não estão incluídos"
+grep -q 'Pin-Priority: 990' "$ROOT/config/archives/trixie-backports.pref.chroot" || fail "prioridade do driver NVIDIA backports não está configurada"
+grep -q '^branding: kelpie
+grep -q '^prompt-install: true$' "$CONFIG/includes.chroot/etc/calamares/settings.conf" || fail "Calamares deve pedir confirmação antes da instalação"
+
+if (( ERRORS > 0 )); then
+  echo "Pré-verificação reprovada: $ERRORS problema(s)." >&2
+  exit 1
+fi
+echo "Pré-verificação estrutural aprovada."
+ "$CONFIG/includes.chroot/etc/calamares/settings.conf" || fail "Calamares não usa a identidade Kelpie"
 grep -q '^prompt-install: true$' "$CONFIG/includes.chroot/etc/calamares/settings.conf" || fail "Calamares deve pedir confirmação antes da instalação"
 
 if (( ERRORS > 0 )); then
