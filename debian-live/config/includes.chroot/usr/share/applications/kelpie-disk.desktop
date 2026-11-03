@@ -1,0 +1,11 @@
+[Desktop Entry]
+Name=Kelpie Disk
+Name[pt_BR]=Discos Kelpie
+Comment=Consultar discos e partições com segurança
+Comment[pt_BR]=Consultar discos e partições com segurança
+Exec=/usr/bin/python3 /usr/lib/kelpie/kelpie-disk.py
+Icon=drive-harddisk
+Terminal=false
+Type=Application
+Categories=System;Utility;
+StartupNotify=true
