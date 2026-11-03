@@ -4,7 +4,7 @@
 
 - Debian 13 Trixie, arquitetura amd64.
 - GNOME, idioma padrão pt_BR e teclado brasileiro.
-- Imagem Live híbrida para teste em UEFI e BIOS legado.
+- Imagem Live híbrida para teste em UEFI e BIOS legado.\n- Calamares com branding Kelpie e confirmação explícita antes da etapa de gravação.
 - A ISO gerada pelo workflow é uma **candidata de desenvolvimento**, não uma versão final.
 
 ## Formatos de aplicativos
@@ -27,7 +27,7 @@ A imagem mantém Nouveau como fallback. O driver proprietário NVIDIA não é in
 - AppArmor incluído e habilitado para iniciar no primeiro boot.
 - UFW/GUFW incluídos, mas o firewall não é ativado automaticamente nesta fase para evitar bloquear conexões e compartilhamentos sem uma política definida.
 
-## Compilação de desenvolvimento
+## Instalador gráfico\n\nO Calamares e o pacote de configurações Debian são incluídos, com configuração própria em `/etc/calamares`, branding escuro/cobre e a pata gerada no build. A confirmação antes da fase de instalação está habilitada. Isso ainda não comprova que a instalação funciona: é obrigatório testar o particionamento e o bootloader em discos virtuais descartáveis e em hardware real.\n\n## Compilação de desenvolvimento
 
 1. Abra a aba Actions do repositório.
 2. Execute manualmente **Build Kelpie OS Linux V3 ISO** na branch `v3-development`.
