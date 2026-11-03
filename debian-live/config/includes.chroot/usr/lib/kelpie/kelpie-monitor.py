@@ -29,6 +29,8 @@ class KelpieMonitor(Gtk.Application):
         self.disk_value = None
         self.swap_value = None
         self.uptime_value = None
+        self.network_value = None
+        self._net_previous = None
         self.process_list = None
         self._process_objects = {}
         psutil.cpu_percent(interval=None)
@@ -71,6 +73,7 @@ class KelpieMonitor(Gtk.Application):
         self.disk_value = self._metric(grid, "Armazenamento", 0, 2)
         self.swap_value = self._metric(grid, "Memória swap", 1, 2)
         self.uptime_value = self._metric(grid, "Tempo ligado", 0, 3)
+        self.network_value = self._metric(grid, "Rede", 1, 3)
 
         process_heading = Gtk.Label(label="Processos em execução")
         process_heading.add_css_class("title-3")
@@ -197,10 +200,31 @@ class KelpieMonitor(Gtk.Application):
                 f"{swap.total / (1024 ** 3):.1f} GB"
             )
             self.uptime_value.set_text(f"{days} dia(s), {hours} h e {remainder // 60} min")
+            self._refresh_network()
             self._refresh_processes()
         except (psutil.Error, OSError, RuntimeError) as error:
             self.gpu_value.set_text(f"Leitura parcial: {error}")
         return GLib.SOURCE_CONTINUE
+
+    def _refresh_network(self):
+        """Show aggregate network throughput since the previous refresh."""
+        try:
+            counters = psutil.net_io_counters()
+            now = time.monotonic()
+            previous = self._net_previous
+            self._net_previous = (now, counters.bytes_recv, counters.bytes_sent)
+            if previous is None:
+                self.network_value.set_text("Calculando velocidade…")
+                return
+            elapsed = max(now - previous[0], 0.001)
+            received = max(0, counters.bytes_recv - previous[1]) / elapsed
+            sent = max(0, counters.bytes_sent - previous[2]) / elapsed
+            self.network_value.set_text(
+                f"Download {received / (1024 ** 2):.2f} MB/s · "
+                f"Upload {sent / (1024 ** 2):.2f} MB/s"
+            )
+        except (psutil.Error, OSError, AttributeError):
+            self.network_value.set_text("Métricas de rede indisponíveis")
 
     def _refresh_processes(self):
         child = self.process_list.get_first_child()
