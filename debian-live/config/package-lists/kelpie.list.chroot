@@ -1,13 +1,30 @@
-# Kelpie OS Linux — Debian 13 Trixie / amd64 / GNOME
+# Kelpie OS Linux V2 — Debian 13 Trixie / amd64 / GNOME
 task-gnome-desktop
 gnome-shell
 gnome-tweaks
 gnome-shell-extensions
-dconf-cli
+gnome-shell-extension-prefs
 gnome-software
 gnome-software-plugin-flatpak
 flatpak
 firefox-esr
+vlc
+gimp
+libreoffice
+timeshift
+gnome-disk-utility
+gnome-system-monitor
+gnome-control-center
+gnome-text-editor
+evince
+file-roller
+pavucontrol
+cups
+system-config-printer
+simple-scan
+ufw
+gufw
+fwupd
 network-manager
 network-manager-gnome
 pipewire-audio
@@ -18,6 +35,10 @@ firmware-misc-nonfree
 mesa-vulkan-drivers
 mesa-utils
 xserver-xorg-video-nouveau
+nvidia-driver
+nvidia-settings
 nvidia-detect
+linux-headers-amd64
 debian-installer-launcher
 zenity
+dconf-cli
