@@ -24,6 +24,7 @@ class KelpieUpdate(Gtk.Application):
         self.output = None
         self.check_button = None
         self.install_button = None
+        self.preview_ready = False
 
     def do_activate(self):
         if self.window:
@@ -153,7 +154,9 @@ class KelpieUpdate(Gtk.Application):
         return GLib.SOURCE_REMOVE
 
     def on_check(self, _button):
+        self.preview_ready = False
         self.install_button.set_sensitive(False)
+        self.output.get_buffer().set_text("")
         self.run_task(
             "Verificando atualizações",
             [
@@ -164,10 +167,19 @@ class KelpieUpdate(Gtk.Application):
         )
 
     def enable_install(self):
-        self.install_button.set_sensitive(True)
-        self.status.set_text("Verificação concluída. Revise a saída antes de instalar.")
+        buffer = self.output.get_buffer()
+        preview = buffer.get_text(buffer.get_start_iter(), buffer.get_end_iter(), False)
+        self.preview_ready = any(line.startswith("Inst ") for line in preview.splitlines())
+        self.install_button.set_sensitive(self.preview_ready)
+        if self.preview_ready:
+            self.status.set_text("Atualizações encontradas. Revise a lista antes de instalar.")
+        else:
+            self.status.set_text("Sistema atualizado: nenhuma atualização aplicável foi encontrada.")
 
     def on_install(self, _button):
+        if not self.preview_ready or self.busy:
+            self.install_button.set_sensitive(False)
+            return
         dialog = Gtk.AlertDialog()
         dialog.set_message("Instalar atualizações disponíveis?")
         dialog.set_detail(
@@ -186,6 +198,8 @@ class KelpieUpdate(Gtk.Application):
             return
         if choice != 1:
             return
+        self.preview_ready = False
+        self.install_button.set_sensitive(False)
         self.run_task(
             "Instalando atualizações",
             [
