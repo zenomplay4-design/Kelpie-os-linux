@@ -1,0 +1,14 @@
+#!/bin/sh
+set -eu
+
+# Keep the firewall inactive during image construction; enable it for first boot.
+UFW_CONF=/etc/ufw/ufw.conf
+DEFAULTS=/etc/default/ufw
+[ -f "$UFW_CONF" ] || { echo "Kelpie: UFW configuration missing" >&2; exit 1; }
+[ -f "$DEFAULTS" ] || { echo "Kelpie: UFW defaults missing" >&2; exit 1; }
+grep -q '^ENABLED=yes$' "$UFW_CONF"
+grep -q '^DEFAULT_INPUT_POLICY="DROP"$' "$DEFAULTS"
+grep -q '^DEFAULT_OUTPUT_POLICY="ACCEPT"$' "$DEFAULTS"
+if command -v systemctl >/dev/null 2>&1; then
+    systemctl --root=/ enable ufw.service
+fi
