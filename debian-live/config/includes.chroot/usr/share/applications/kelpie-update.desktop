@@ -1,0 +1,11 @@
+[Desktop Entry]
+Name=Kelpie Update
+Name[pt_BR]=Atualizações Kelpie
+Comment=Verificar e instalar atualizações do sistema
+Comment[pt_BR]=Verificar e instalar atualizações do sistema
+Exec=/usr/bin/python3 /usr/lib/kelpie/kelpie-update.py
+Icon=system-software-update
+Terminal=false
+Type=Application
+Categories=System;Settings;
+StartupNotify=true
