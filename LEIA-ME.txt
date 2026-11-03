@@ -1,0 +1,7 @@
+KELPIE OS LINUX - BASE DEBIAN 13 GNOME
+
+Pacote de construção de ISO Live instalável Debian 13 (Trixie) amd64 com GNOME.
+
+Inclui tema escuro, identidade Kelpie, menu GNOME personalizado, firmware e stack gráfico Nouveau/Mesa, nvidia-detect e instalador Debian Live.
+
+A ISO ainda precisa ser compilada e testada pelo workflow GitHub Actions.
