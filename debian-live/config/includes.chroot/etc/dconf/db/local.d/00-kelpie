@@ -10,3 +10,15 @@ picture-options='zoom'
 
 [org/gnome/shell]
 enabled-extensions=['kelpie-menu@kelpieos.local']
+
+# Persistent bottom taskbar/dock (Dash to Dock)
+[org/gnome/shell/extensions/dash-to-dock]
+dock-position='BOTTOM'
+dock-fixed=true
+autohide=false
+intellihide=false
+extend-height=false
+show-trash=false
+show-mounts=false
+transparency-mode='FIXED'
+background-opacity=0.28
