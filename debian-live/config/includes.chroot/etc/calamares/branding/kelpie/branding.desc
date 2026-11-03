@@ -23,9 +23,9 @@ strings:
   donateUrl: ""
 
 images:
-  productIcon: "kelpie-paw.png"
-  productLogo: "kelpie-paw.png"
-  productWelcome: "kelpie-paw.png"
+  productIcon: "kelpie-paw.svg"
+  productLogo: "kelpie-paw.svg"
+  productWelcome: "kelpie-paw.svg"
 
 style:
   SidebarBackground: "#080d18"
