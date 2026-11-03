@@ -1,0 +1,23 @@
+# Kelpie OS Linux — Debian 13 Trixie / amd64 / GNOME
+task-gnome-desktop
+gnome-shell
+gnome-tweaks
+gnome-shell-extensions
+dconf-cli
+gnome-software
+gnome-software-plugin-flatpak
+flatpak
+firefox-esr
+network-manager
+network-manager-gnome
+pipewire-audio
+wireplumber
+firmware-linux
+firmware-linux-nonfree
+firmware-misc-nonfree
+mesa-vulkan-drivers
+mesa-utils
+xserver-xorg-video-nouveau
+nvidia-detect
+debian-installer-launcher
+zenity
