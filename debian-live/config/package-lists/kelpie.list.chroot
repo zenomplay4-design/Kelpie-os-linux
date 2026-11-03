@@ -1,4 +1,5 @@
-# Kelpie OS Linux V2 — Debian 13 Trixie / amd64 / GNOME
+# Kelpie OS Linux V3 — Debian 13 Trixie / amd64 / GNOME
+# Desktop e aplicativos essenciais
 task-gnome-desktop
 gnome-shell
 gnome-tweaks
@@ -6,32 +7,79 @@ gnome-shell-extensions
 gnome-shell-extension-prefs
 gnome-software
 gnome-software-plugin-flatpak
+xdg-desktop-portal
+xdg-desktop-portal-gnome
+xdg-desktop-portal-gtk
 flatpak
 firefox-esr
+firefox-esr-l10n-pt-br
 vlc
 gimp
 libreoffice
-timeshift
+libreoffice-l10n-pt-br
+libreoffice-help-pt-br
+gnome-calculator
+gnome-calendar
+gnome-clocks
 gnome-disk-utility
 gnome-system-monitor
 gnome-control-center
 gnome-text-editor
 evince
 file-roller
+baobab
+gparted
 pavucontrol
+
+# Idioma, fontes e acessibilidade
+locales
+fonts-noto-core
+fonts-noto-color-emoji
+hunspell-pt-br
+orca
+espeak-ng
+
+# Backup, recuperação e armazenamento
+timeshift
+rsync
+btrfs-progs
+cryptsetup
+cryptsetup-initramfs
+smartmontools
+nvme-cli
+
+# Rede, impressão, Bluetooth e dispositivos
 cups
 system-config-printer
 printer-driver-all
 simple-scan
 bluez
 blueman
-ufw
-gufw
-fwupd
 network-manager
 network-manager-gnome
+network-manager-openvpn-gnome
+avahi-daemon
+fwupd
+
+# Segurança e manutenção
+ufw
+gufw
+apparmor
+apparmor-utils
+unattended-upgrades
+apt-listchanges
+needrestart
+debsums
+ca-certificates
+
+# Áudio e energia
 pipewire-audio
 wireplumber
+power-profiles-daemon
+lm-sensors
+powertop
+
+# Firmware e gráficos: Nouveau como fallback; NVIDIA proprietário requer validação no hardware
 firmware-linux
 firmware-linux-nonfree
 firmware-misc-nonfree
@@ -42,6 +90,8 @@ nvidia-driver
 nvidia-settings
 nvidia-detect
 linux-headers-amd64
+
+# Instalador e ferramentas do sistema
 debian-installer-launcher
 zenity
 dconf-cli
