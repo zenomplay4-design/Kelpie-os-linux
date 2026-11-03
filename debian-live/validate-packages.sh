@@ -29,7 +29,7 @@ for package in "${PACKAGES[@]}"; do
   if ! [[ "$package" =~ ^[a-z0-9][a-z0-9+.-]*$ ]]; then
     echo "ERRO: nome de pacote inválido: $package" >&2
     invalid=1
-  elif ! apt-cache show "$package" >/dev/null 2>&1; then
+  elif ! apt-cache show "$package" 2>/dev/null | grep -q "^Package: ${package}$"; then
     echo "AUSENTE: $package"
     invalid=1
   else
