@@ -1,0 +1,55 @@
+name: Validate Kelpie OS V3 configuration
+
+on:
+  push:
+    branches: [ v3-development ]
+    paths:
+      - 'debian-live/**'
+      - '.github/workflows/validate-v3.yml'
+  pull_request:
+    branches: [ v3-development ]
+    paths:
+      - 'debian-live/**'
+      - '.github/workflows/validate-v3.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: kelpie-v3-validation-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  validate:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 45
+    steps:
+      - name: Checkout source
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.pull_request.head.sha || github.sha }}
+
+      - name: Validate package metadata, configuration and dependency resolution
+        run: |
+          docker run --rm \
+            -v "${GITHUB_WORKSPACE}/debian-live:/src:ro" \
+            debian:trixie bash -Eeuo pipefail -c '
+              cat > /etc/apt/sources.list.d/debian.sources <<EOF
+          Types: deb
+          URIs: http://deb.debian.org/debian
+          Suites: trixie trixie-updates
+          Components: main contrib non-free non-free-firmware
+          Signed-By: /usr/share/keyrings/debian-archive-keyring.gpg
+
+          Types: deb
+          URIs: http://deb.debian.org/debian-security
+          Suites: trixie-security
+          Components: main contrib non-free non-free-firmware
+          Signed-By: /usr/share/keyrings/debian-archive-keyring.gpg
+          EOF
+              apt-get update
+              apt-get install -y --no-install-recommends python3-yaml
+              bash /src/preflight.sh
+              bash /src/validate-packages.sh
+            '
