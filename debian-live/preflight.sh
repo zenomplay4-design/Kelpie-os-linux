@@ -21,6 +21,8 @@ need_file "$CONFIG/includes.chroot/etc/dconf/db/local.d/00-kelpie"
 need_file "$CONFIG/includes.chroot/etc/calamares/settings.conf"
 need_file "$CONFIG/includes.chroot/etc/calamares/branding/kelpie/branding.desc"
 need_file "$CONFIG/includes.chroot/usr/share/applications/kelpie-install.desktop"
+need_file "$CONFIG/includes.chroot/usr/share/applications/kelpie-monitor.desktop"
+need_file "$CONFIG/includes.chroot/usr/lib/kelpie/kelpie-monitor.py"
 need_file "$CONFIG/includes.chroot/usr/share/gnome-shell/extensions/kelpie-menu@kelpieos.local/extension.js"
 need_file "$CONFIG/includes.chroot/usr/share/gnome-shell/extensions/kelpie-menu@kelpieos.local/metadata.json"
 need_dir "$CONFIG/includes.chroot/usr/share/gnome-shell/extensions/kelpie-menu@kelpieos.local"
@@ -32,6 +34,7 @@ sh -n "$CONFIG/hooks/normal/0200-kelpie-branding.hook.chroot" || fail "sintaxe P
 
 if command -v python3 >/dev/null 2>&1; then
   python3 -m json.tool "$CONFIG/includes.chroot/usr/share/gnome-shell/extensions/kelpie-menu@kelpieos.local/metadata.json" >/dev/null || fail "metadata.json da extensão não é JSON válido"
+  python3 -m py_compile "$CONFIG/includes.chroot/usr/lib/kelpie/kelpie-monitor.py" || fail "sintaxe Python inválida no Kelpie Monitor"
   ROOT="$ROOT" python3 - <<'PY' || fail "configurações YAML do Calamares inválidas"
 import os
 import yaml
