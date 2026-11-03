@@ -32,15 +32,16 @@ sh -n "$CONFIG/hooks/normal/0200-kelpie-branding.hook.chroot" || fail "sintaxe P
 
 if command -v python3 >/dev/null 2>&1; then
   python3 -m json.tool "$CONFIG/includes.chroot/usr/share/gnome-shell/extensions/kelpie-menu@kelpieos.local/metadata.json" >/dev/null || fail "metadata.json da extensão não é JSON válido"
-  python3 - <<'PY' || fail "configurações YAML do Calamares inválidas"
+  ROOT="$ROOT" python3 - <<'PY' || fail "configurações YAML do Calamares inválidas"
+import os
 import yaml
 from pathlib import Path
-root = Path(__file__).resolve().parent if "__file__" in globals() else Path(".")
+root = Path(os.environ["ROOT"])
 for name in (
     "config/includes.chroot/etc/calamares/settings.conf",
     "config/includes.chroot/etc/calamares/branding/kelpie/branding.desc",
 ):
-    with open(name, encoding="utf-8") as stream:
+    with open(root / name, encoding="utf-8") as stream:
         yaml.safe_load(stream)
 print("YAML do Calamares válido.")
 PY
