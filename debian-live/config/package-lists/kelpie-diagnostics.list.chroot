@@ -1,0 +1,8 @@
+# Kelpie OS V3 — ferramentas de diagnóstico e acessibilidade
+# Pacotes adicionais separados para facilitar auditoria e reduzir acoplamento.
+intel-microcode
+python3-psutil
+btop
+gnome-logs
+mousetweaks
+speech-dispatcher
