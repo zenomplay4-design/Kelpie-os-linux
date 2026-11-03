@@ -38,6 +38,7 @@ export default class KelpieMenuExtension extends Extension {
     this._addApp('Monitor Kelpie', 'kelpie-monitor.desktop');
     this._addApp('Atualizações Kelpie', 'kelpie-update.desktop');
     this._addApp('Personalização Kelpie', 'kelpie-tweaks.desktop');
+    this._addApp('Discos Kelpie', 'kelpie-disk.desktop');
     this._addApp('Discos', 'org.gnome.DiskUtility.desktop');
     this.menu.addMenuItem(new PopupMenu.PopupSeparatorMenuItem());
     this._addApp('Configurações', 'org.gnome.Settings.desktop');
