@@ -17,7 +17,7 @@ export default class KelpieMenuExtension extends Extension {
     });
 
     this.icon = new St.Icon({
-      gicon: Gio.icon_new_for_string('/usr/share/pixmaps/kelpie-paw.png'),
+      gicon: Gio.icon_new_for_string('/usr/share/pixmaps/kelpie-paw.svg'),
       icon_size: 18,
       style_class: 'system-status-icon',
     });
