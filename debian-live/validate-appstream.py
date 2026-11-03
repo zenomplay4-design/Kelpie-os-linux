@@ -32,7 +32,7 @@ def main():
             errors.append(f"ID divergente: {meta_path}")
         if not root.findtext("name") or not root.findtext("summary"):
             errors.append(f"Nome/resumo ausente: {meta_path}")
-        if not root.findall("summary[@xml:lang='pt_BR']"):
+        if not any(node.get("{http://www.w3.org/XML/1998/namespace}lang") == "pt_BR" for node in root.findall("summary")):
             errors.append(f"Resumo pt_BR ausente: {meta_path}")
         launchable = root.find("launchable")
         if launchable is None or launchable.get("type") != "desktop-id" or launchable.text != desktop_id:
