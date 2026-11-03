@@ -103,6 +103,7 @@ nvidia-detect
 nvidia-driver
 nvidia-kernel-dkms
 nvidia-settings
+nvidia-persistenced
 dkms
 linux-headers-amd64
 
