@@ -22,6 +22,7 @@
 - **Kelpie Monitor:** primeira versão GTK4 para CPU, memória, GPU, temperaturas, discos e processos. Ainda precisa de teste em sessão GNOME real.
 - **Kelpie Update:** primeira versão GTK4 para atualizar listas APT, simular atualizações disponíveis, pedir confirmação e autenticação administrativa, instalar atualizações padrão e guardar log em `~/.local/state/kelpie/update.log`. Não executa `full-upgrade` nem remoção automática de pacotes. Ainda precisa de testes de runtime.
 
+- **Kelpie Disk:** primeira versão GTK4 de inventário somente leitura usando `lsblk`; mostra dispositivos, partições, tamanho, sistema de arquivos, rótulos, UUIDs e pontos de montagem. Não formata, apaga, redimensiona nem monta volumes.
 - **Kelpie Tweaks:** primeira versão GTK4 para esquema claro/escuro, animações, alto contraste e escala de texto, com restauração dos padrões do usuário. Não implementa ainda blur/glassmorphism; isso permanece como trabalho separado.
 
 ## Gráficos NVIDIA
