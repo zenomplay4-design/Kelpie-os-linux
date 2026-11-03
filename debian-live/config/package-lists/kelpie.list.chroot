@@ -7,6 +7,10 @@ gnome-shell-extensions
 gnome-shell-extension-prefs
 gnome-software
 gnome-software-plugin-flatpak
+snapd
+gnome-software-plugin-deb
+gnome-software-plugin-fwupd
+gnome-software-plugin-snap
 xdg-desktop-portal
 xdg-desktop-portal-gnome
 xdg-desktop-portal-gtk
@@ -79,17 +83,20 @@ power-profiles-daemon
 lm-sensors
 powertop
 
-# Firmware e gráficos: Nouveau como fallback; NVIDIA proprietário requer validação no hardware
+# Firmware e gráficos: Nouveau e firmware NVIDIA; driver proprietário fica fora da ISO até validação de segurança
 firmware-linux
 firmware-linux-nonfree
 firmware-misc-nonfree
+firmware-nvidia-graphics
+firmware-iwlwifi
+firmware-realtek
+firmware-atheros
+firmware-brcm80211
+firmware-mediatek
 mesa-vulkan-drivers
 mesa-utils
 xserver-xorg-video-nouveau
-nvidia-driver
-nvidia-settings
 nvidia-detect
-linux-headers-amd64
 
 # Instalador e ferramentas do sistema
 debian-installer-launcher
