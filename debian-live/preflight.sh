@@ -16,6 +16,7 @@ need_file "$ROOT/README-V3-VALIDATION.md"
 need_file "$CONFIG/package-lists/kelpie.list.chroot"
 need_file "$CONFIG/package-lists/kelpie-diagnostics.list.chroot"
 need_file "$CONFIG/hooks/normal/0200-kelpie-branding.hook.chroot"
+need_file "$CONFIG/hooks/normal/0300-kelpie-dconf.hook.chroot"
 need_file "$CONFIG/includes.chroot/etc/apt/apt.conf.d/20auto-upgrades"
 need_file "$CONFIG/includes.chroot/etc/dconf/db/local.d/00-kelpie"
 need_file "$CONFIG/includes.chroot/etc/calamares/settings.conf"
@@ -37,6 +38,7 @@ bash -n "$ROOT/preflight.sh" || fail "sintaxe Bash inválida em preflight.sh"
 bash -n "$ROOT/build-in-container.sh" || fail "sintaxe Bash inválida em build-in-container.sh"
 bash -n "$ROOT/validate-packages.sh" || fail "sintaxe Bash inválida em validate-packages.sh"
 sh -n "$CONFIG/hooks/normal/0200-kelpie-branding.hook.chroot" || fail "sintaxe POSIX shell inválida no hook de identidade"
+sh -n "$CONFIG/hooks/normal/0300-kelpie-dconf.hook.chroot" || fail "sintaxe POSIX shell inválida no hook dconf"
 
 if command -v python3 >/dev/null 2>&1; then
   python3 -m json.tool "$CONFIG/includes.chroot/usr/share/gnome-shell/extensions/kelpie-menu@kelpieos.local/metadata.json" >/dev/null || fail "metadata.json da extensão não é JSON válido"
@@ -64,6 +66,22 @@ fi
 if ! grep -q 'APT::Periodic::Unattended-Upgrade "1"' "$CONFIG/includes.chroot/etc/apt/apt.conf.d/20auto-upgrades"; then
   fail "atualizações automáticas de segurança não estão habilitadas"
 fi
+if ! grep -q 'gnome-shell-extension-dashtodock' "$CONFIG/package-lists/kelpie.list.chroot"; then
+  fail "Dash to Dock não está incluído na imagem"
+fi
+if ! grep -q "dock-position='BOTTOM'" "$CONFIG/includes.chroot/etc/dconf/db/local.d/00-kelpie"; then
+  fail "dock não está configurado na posição inferior"
+fi
+if ! grep -q 'autohide=false' "$CONFIG/includes.chroot/etc/dconf/db/local.d/00-kelpie"; then
+  fail "dock deve permanecer visível"
+fi
+if ! grep -q 'intellihide=false' "$CONFIG/includes.chroot/etc/dconf/db/local.d/00-kelpie"; then
+  fail "ocultação inteligente do dock deve estar desativada"
+fi
+if ! grep -q 'dconf update' "$CONFIG/hooks/normal/0300-kelpie-dconf.hook.chroot"; then
+  fail "hook não compila o banco dconf"
+fi
+
 if ! grep -q 'kelpie-menu@kelpieos.local' "$CONFIG/includes.chroot/etc/dconf/db/local.d/00-kelpie"; then
   fail "extensão Kelpie não está habilitada no dconf"
 fi
