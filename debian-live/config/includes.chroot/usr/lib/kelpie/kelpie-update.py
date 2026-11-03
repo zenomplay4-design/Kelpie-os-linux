@@ -6,6 +6,8 @@ import threading
 from datetime import datetime
 from pathlib import Path
 
+from kelpie_utils import has_upgradable_packages
+
 import gi
 gi.require_version("Gtk", "4.0")
 from gi.repository import Gtk, GLib
@@ -169,7 +171,7 @@ class KelpieUpdate(Gtk.Application):
     def enable_install(self):
         buffer = self.output.get_buffer()
         preview = buffer.get_text(buffer.get_start_iter(), buffer.get_end_iter(), False)
-        self.preview_ready = any(line.startswith("Inst ") for line in preview.splitlines())
+        self.preview_ready = has_upgradable_packages(preview)
         self.install_button.set_sensitive(self.preview_ready)
         if self.preview_ready:
             self.status.set_text("Atualizações encontradas. Revise a lista antes de instalar.")
