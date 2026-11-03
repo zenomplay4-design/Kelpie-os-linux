@@ -50,6 +50,7 @@ if command -v python3 >/dev/null 2>&1; then
   for app in monitor update tweaks disk; do
     PYTHONPYCACHEPREFIX=/tmp/kelpie-pycache python3 -m py_compile "$CONFIG/includes.chroot/usr/lib/kelpie/kelpie-$app.py" || fail "sintaxe Python inválida no Kelpie $app"
   done
+  PYTHONPYCACHEPREFIX=/tmp/kelpie-pycache python3 -m py_compile "$CONFIG/includes.chroot/usr/lib/kelpie/kelpie_utils.py" || fail "sintaxe Python inválida em kelpie_utils.py"
   ROOT="$ROOT" python3 - <<'PY' || fail "configurações YAML do Calamares inválidas"
 import os
 import yaml
@@ -69,24 +70,7 @@ fi
 
 grep -q '^ENABLED=yes$' "$CONFIG/includes.chroot/etc/ufw/ufw.conf" || fail "UFW não está habilitado para o primeiro boot"
 grep -q '^DEFAULT_INPUT_POLICY="DROP"$' "$CONFIG/includes.chroot/etc/default/ufw" || fail "UFW deve bloquear conexões de entrada por padrão"
-grep -q '^DEFAULT_OUTPUT_POLICY="ACCEPT"grep -q 'APT::Periodic::Unattended-Upgrade "1"' "$CONFIG/includes.chroot/etc/apt/apt.conf.d/20auto-upgrades" || fail "atualizações automáticas de segurança não estão habilitadas"
-grep -q 'gnome-shell-extension-dashtodock' "$CONFIG/package-lists/kelpie.list.chroot" || fail "Dash to Dock não está incluído"
-grep -q "dock-position='BOTTOM'" "$CONFIG/includes.chroot/etc/dconf/db/local.d/00-kelpie" || fail "dock não está na posição inferior"
-grep -q 'autohide=false' "$CONFIG/includes.chroot/etc/dconf/db/local.d/00-kelpie" || fail "dock deve permanecer visível"
-grep -q 'intellihide=false' "$CONFIG/includes.chroot/etc/dconf/db/local.d/00-kelpie" || fail "ocultação inteligente do dock deve estar desativada"
-grep -q 'dconf update' "$CONFIG/hooks/normal/0300-kelpie-dconf.hook.chroot" || fail "hook não compila o banco dconf"
-grep -q 'kelpie-menu@kelpieos.local' "$CONFIG/includes.chroot/etc/dconf/db/local.d/00-kelpie" || fail "extensão Kelpie não está habilitada"
-grep -q 'kelpie-constellation.png' "$CONFIG/includes.chroot/etc/dconf/db/local.d/00-kelpie" || fail "wallpaper de constelação não está configurado"
-grep -q 'kelpie-paw.png' "$CONFIG/includes.chroot/usr/share/gnome-shell/extensions/kelpie-menu@kelpieos.local/extension.js" || fail "ícone oficial da pata não está referenciado"
-grep -q '^branding: kelpie$' "$CONFIG/includes.chroot/etc/calamares/settings.conf" || fail "Calamares não usa a identidade Kelpie"
-grep -q '^prompt-install: true$' "$CONFIG/includes.chroot/etc/calamares/settings.conf" || fail "Calamares deve pedir confirmação antes da instalação"
-
-if (( ERRORS > 0 )); then
-  echo "Pré-verificação reprovada: $ERRORS problema(s)." >&2
-  exit 1
-fi
-echo "Pré-verificação estrutural aprovada."
- "$CONFIG/includes.chroot/etc/default/ufw" || fail "UFW deve permitir conexões de saída por padrão"
+grep -q '^DEFAULT_OUTPUT_POLICY="ACCEPT"$' "$CONFIG/includes.chroot/etc/default/ufw" || fail "UFW deve permitir conexões de saída por padrão"
 grep -q 'remote-add --if-not-exists flathub' "$CONFIG/hooks/normal/0500-kelpie-flatpak.hook.chroot" || fail "Flathub não está configurado no primeiro boot"
 grep -q 'APT::Periodic::Unattended-Upgrade "1"' "$CONFIG/includes.chroot/etc/apt/apt.conf.d/20auto-upgrades" || fail "atualizações automáticas de segurança não estão habilitadas"
 grep -q 'gnome-shell-extension-dashtodock' "$CONFIG/package-lists/kelpie.list.chroot" || fail "Dash to Dock não está incluído"
