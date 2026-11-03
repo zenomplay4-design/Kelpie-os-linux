@@ -34,7 +34,7 @@ sh -n "$CONFIG/hooks/normal/0200-kelpie-branding.hook.chroot" || fail "sintaxe P
 
 if command -v python3 >/dev/null 2>&1; then
   python3 -m json.tool "$CONFIG/includes.chroot/usr/share/gnome-shell/extensions/kelpie-menu@kelpieos.local/metadata.json" >/dev/null || fail "metadata.json da extensão não é JSON válido"
-  python3 -m py_compile "$CONFIG/includes.chroot/usr/lib/kelpie/kelpie-monitor.py" || fail "sintaxe Python inválida no Kelpie Monitor"
+  PYTHONPYCACHEPREFIX=/tmp/kelpie-pycache python3 -m py_compile "$CONFIG/includes.chroot/usr/lib/kelpie/kelpie-monitor.py" || fail "sintaxe Python inválida no Kelpie Monitor"
   ROOT="$ROOT" python3 - <<'PY' || fail "configurações YAML do Calamares inválidas"
 import os
 import yaml
