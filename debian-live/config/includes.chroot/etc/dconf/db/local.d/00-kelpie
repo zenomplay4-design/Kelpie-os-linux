@@ -1,0 +1,6 @@
+[org/gnome/desktop/interface]
+color-scheme='prefer-dark'
+
+[org/gnome/desktop/background]
+picture-uri='file:///usr/share/backgrounds/kelpie/kelpie-wolf.jpg'
+picture-uri-dark='file:///usr/share/backgrounds/kelpie/kelpie-wolf.jpg'
