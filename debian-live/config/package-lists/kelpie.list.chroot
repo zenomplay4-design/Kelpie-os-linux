@@ -106,9 +106,9 @@ nvidia-settings
 nvidia-persistenced
 dkms
 linux-headers-amd64
-# Kernel LTS 6.18 do Debian backports (linha usada também pelo Manjaro); o kernel padrão Debian permanece como fallback
-linux-image-6.18.15+deb13-amd64
-linux-headers-6.18.15+deb13-amd64
+# Metapacotes acompanham o kernel LTS mais recente do Debian backports;
+# o kernel padrão do Trixie permanece disponível como fallback.
+linux-image-amd64
 
 # Instalador e ferramentas do sistema
 debian-installer-launcher
