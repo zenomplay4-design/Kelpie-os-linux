@@ -10,7 +10,7 @@ from typing import Optional
 import psutil
 import gi
 
-from kelpie_utils import read_cpu_model, read_nouveau_gpu_stats
+from kelpie_utils import calculate_io_rates, read_cpu_model, read_nouveau_gpu_stats
 
 gi.require_version("Gtk", "4.0")
 from gi.repository import Gtk, GLib
@@ -31,6 +31,8 @@ class KelpieMonitor(Gtk.Application):
         self.uptime_value = None
         self.network_value = None
         self._net_previous = None
+        self.disk_io_value = None
+        self._disk_io_previous = None
         self.process_list = None
         self._process_objects = {}
         psutil.cpu_percent(interval=None)
@@ -74,6 +76,7 @@ class KelpieMonitor(Gtk.Application):
         self.swap_value = self._metric(grid, "Memória swap", 1, 2)
         self.uptime_value = self._metric(grid, "Tempo ligado", 0, 3)
         self.network_value = self._metric(grid, "Rede", 1, 3)
+        self.disk_io_value = self._metric(grid, "Atividade do disco", 0, 4)
 
         process_heading = Gtk.Label(label="Processos em execução")
         process_heading.add_css_class("title-3")
@@ -201,6 +204,7 @@ class KelpieMonitor(Gtk.Application):
             )
             self.uptime_value.set_text(f"{days} dia(s), {hours} h e {remainder // 60} min")
             self._refresh_network()
+            self._refresh_disk_io()
             self._refresh_processes()
         except (psutil.Error, OSError, RuntimeError) as error:
             self.gpu_value.set_text(f"Leitura parcial: {error}")
@@ -225,6 +229,24 @@ class KelpieMonitor(Gtk.Application):
             )
         except (psutil.Error, OSError, AttributeError):
             self.network_value.set_text("Métricas de rede indisponíveis")
+
+    def _refresh_disk_io(self):
+        try:
+            counters = psutil.disk_io_counters()
+            if counters is None:
+                self.disk_io_value.set_text('Métricas de disco indisponíveis')
+                return
+            now = time.monotonic()
+            current = (counters.read_bytes, counters.write_bytes)
+            rates = calculate_io_rates(self._disk_io_previous, current, now)
+            self._disk_io_previous = (now, *current)
+            if rates is None:
+                self.disk_io_value.set_text('Calculando atividade…')
+                return
+            read_rate, write_rate = rates
+            self.disk_io_value.set_text(f'Leitura {read_rate / (1024 ** 2):.2f} MB/s · Gravação {write_rate / (1024 ** 2):.2f} MB/s')
+        except (psutil.Error, OSError, AttributeError, TypeError, ValueError):
+            self.disk_io_value.set_text('Métricas de disco indisponíveis')
 
     def _refresh_processes(self):
         child = self.process_list.get_first_child()
