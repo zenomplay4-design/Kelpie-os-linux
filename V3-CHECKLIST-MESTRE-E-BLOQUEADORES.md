@@ -33,6 +33,9 @@ Legenda:
 
 ## 3. Ambiente GNOME e identidade visual
 - [x] Tema escuro Adwaita definido como padrão.
+- [x] Dash to Dock do Debian incluído, configurado fixo na parte inferior e com transparência leve.
+- [x] Hook de build compila o banco dconf para aplicar as preferências padrão aos novos usuários.
+- [ ] Validar visualmente o dock no primeiro login GNOME, com reinício de sessão e resolução 1366×768/1920×1080.
 - [x] Paleta escura com detalhes cobre no CSS da extensão.
 - [x] Pata branca criada pelo processo de build para o menu.
 - [x] Wallpaper de constelação provisório gerado no build.
