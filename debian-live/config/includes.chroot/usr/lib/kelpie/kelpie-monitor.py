@@ -4,6 +4,7 @@ from __future__ import annotations
 
 import shutil
 import subprocess
+import time
 from typing import Optional
 
 import psutil
@@ -167,7 +168,7 @@ class KelpieMonitor(Gtk.Application):
             memory = psutil.virtual_memory()
             disk = psutil.disk_usage("/")
             swap = psutil.swap_memory()
-            uptime_seconds = max(0, int(psutil.boot_time() and (__import__("time").time() - psutil.boot_time())))
+            uptime_seconds = max(0, int(time.time() - psutil.boot_time()))
             hours, remainder = divmod(uptime_seconds, 3600)
             days, hours = divmod(hours, 24)
             self.cpu_value.set_text(f"{cpu:.0f}% de uso · {psutil.cpu_count(logical=True) or '?'} threads")
