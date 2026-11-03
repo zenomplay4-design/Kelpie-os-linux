@@ -26,6 +26,10 @@ class KelpieUtilityTests(unittest.TestCase):
         self.assertIsNone(calculate_io_rates((10.0, 300, 200), (100, 250), 12.0))
         self.assertIsNone(calculate_io_rates((10.0, 100, 100), (200, 200), 10.0))
 
+    def test_block_device_summary_counts_nested_partitions(self):
+        devices = [{"type": "disk", "ro": "0", "mountpoints": [], "children": [{"type": "part", "ro": "1", "mountpoints": ["/"], "children": []}, {"type": "part", "ro": "0", "mountpoints": [None]}]}]
+        self.assertEqual(summarize_block_devices(devices), {"disks": 1, "partitions": 2, "mounted": 1, "readonly": 1})
+
     def test_nouveau_gpu_sysfs_metrics(self):
         with tempfile.TemporaryDirectory() as temporary:
             device = Path(temporary) / "card0" / "device"

@@ -76,3 +76,25 @@ def calculate_io_rates(previous, current, now):
         return ((read_bytes - previous_read) / elapsed, (write_bytes - previous_write) / elapsed)
     except (TypeError, ValueError, IndexError, OverflowError):
         return None
+
+
+def summarize_block_devices(devices):
+    """Summarize lsblk JSON recursively without changing device state."""
+    result = {"disks": 0, "partitions": 0, "mounted": 0, "readonly": 0}
+    def visit(items):
+        for item in items or []:
+            kind = str(item.get("type") or "").lower()
+            if kind == "disk":
+                result["disks"] += 1
+            elif kind == "part":
+                result["partitions"] += 1
+            mounts = item.get("mountpoints") or []
+            if isinstance(mounts, str):
+                mounts = [mounts]
+            if any(mounts):
+                result["mounted"] += 1
+            if str(item.get("ro")) == "1":
+                result["readonly"] += 1
+            visit(item.get("children"))
+    visit(devices)
+    return result

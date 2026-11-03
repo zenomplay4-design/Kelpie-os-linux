@@ -22,6 +22,7 @@ class KelpieDisk(Gtk.Application):
         self.window = None
         self.list_box = None
         self.status = None
+        self.summary = None
         self.refresh_button = None
 
     def do_activate(self):
@@ -59,6 +60,11 @@ class KelpieDisk(Gtk.Application):
         self.refresh_button.connect("clicked", self.on_refresh)
         toolbar.append(self.refresh_button)
         root.append(toolbar)
+
+        self.summary = Gtk.Label(label='Resumo do armazenamento: aguardando leitura…')
+        self.summary.set_xalign(0)
+        self.summary.add_css_class('dim-label')
+        root.append(self.summary)
 
         scroller = Gtk.ScrolledWindow()
         scroller.set_vexpand(True)
@@ -120,6 +126,9 @@ class KelpieDisk(Gtk.Application):
                 raise RuntimeError(detail)
             payload = json.loads(result.stdout)
             devices = payload.get("blockdevices", [])
+            from kelpie_utils import summarize_block_devices
+            summary = summarize_block_devices(devices)
+            self.summary.set_text(f"{summary['disks']} disco(s) · {summary['partitions']} partição(ões) · {summary['mounted']} montado(s) · {summary['readonly']} somente leitura")
             if not devices:
                 self.add_empty("Nenhum dispositivo de armazenamento foi encontrado.")
             for device in devices:
