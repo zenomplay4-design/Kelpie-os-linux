@@ -1,5 +1,0 @@
-KELPIE OS LINUX — STATUS REAL
-
-Projeto-fonte e automação de build preparados. ISO ainda NÃO compilada nem testada.
-
-A ISO só será considerada pronta após a compilação remota, validação de integridade e teste de boot em VM/hardware.
