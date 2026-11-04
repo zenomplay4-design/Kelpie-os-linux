@@ -1,7 +1,0 @@
-KELPIE OS LINUX — Debian 13 Trixie / GNOME / amd64
-
-A configuração gera uma imagem Live híbrida com instalador Debian no menu de inicialização.
-
-Para compilar em Debian 13 amd64 com internet e 25 GB livres: chmod +x build-kelpie-debian13.sh && ./build-kelpie-debian13.sh
-
-A ISO precisa ser testada em VM e no computador de destino antes de instalar.
