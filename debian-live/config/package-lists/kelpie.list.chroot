@@ -99,15 +99,15 @@ mesa-vulkan-drivers
 mesa-utils
 xserver-xorg-video-nouveau
 nvidia-detect
-# Driver proprietário NVIDIA 550 de trixie-backports: variante corrigida para kernel 6.18 e Maxwell (GTX 750); módulo fechado via DKMS
+# Driver proprietário NVIDIA 550 de trixie-backports para Maxwell (GTX 750); DKMS sobre kernel estável Debian 13 (6.12 LTS)
 nvidia-driver
 nvidia-kernel-dkms
 nvidia-settings
 nvidia-persistenced
 dkms
 linux-headers-amd64
-# Metapacotes acompanham o kernel LTS mais recente do Debian backports;
-# o kernel padrão do Trixie permanece disponível como fallback.
+# Kernel e headers do Debian 13 stable (6.12 LTS), escolhidos para
+# compatibilidade com o módulo proprietário NVIDIA 550 via DKMS.
 linux-image-amd64
 
 # Instalador e ferramentas do sistema
