@@ -47,9 +47,11 @@ cat > /build/config/archives/trixie-backports.list.chroot <<'EOF'
 deb http://deb.debian.org/debian trixie-backports main contrib non-free non-free-firmware
 EOF
 cat > /build/config/archives/trixie-backports.pref.chroot <<'EOF'
-# Keep the NVIDIA driver stack and kernel ABI internally consistent:
-# their exact-version dependencies (including linux-base) must come from backports.
-Package: nvidia-* libnvidia-* libgl*-nvidia* libgles*-nvidia* libegl*-nvidia* libvulkan*-nvidia* libxnvctrl* xserver-xorg-video-nvidia linux-*
+# NVIDIA 550 supports the Maxwell GTX 750, but its DKMS module does not
+# build reliably against the newer 7.x backports kernel ABI. Keep the kernel
+# and headers on Debian 13 stable (6.12 LTS); take only the NVIDIA stack from
+# backports so its exact-version userspace dependencies remain aligned.
+Package: nvidia-* libnvidia-* libgl*-nvidia* libgles*-nvidia* libegl*-nvidia* libvulkan*-nvidia* libxnvctrl* xserver-xorg-video-nvidia
 Pin: release n=trixie-backports
 Pin-Priority: 990
 
