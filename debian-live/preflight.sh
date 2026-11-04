@@ -79,18 +79,13 @@ grep -q '^branding: kelpie$' "$CONFIG/includes.chroot/etc/calamares/settings.con
 grep -q '^prompt-install: true$' "$CONFIG/includes.chroot/etc/calamares/settings.conf" || fail "confirmação Calamares ausente"
 grep -q 'trixie-backports' "$ROOT/build-in-container.sh" || fail "Debian backports não configurado no build"
 grep -q 'Pin-Priority: 990' "$ROOT/build-in-container.sh" || fail "prioridade backports não configurada"
-grep -q 'xserver-xorg-video-nvidia
-
-if (( ERRORS > 0 )); then
-  echo "Pré-verificação reprovada: $ERRORS problema(s)." >&2
-  exit 1
-fi
-echo "Pré-verificação estrutural aprovada."
- "$ROOT/build-in-container.sh" || fail "pin NVIDIA ausente"
-if grep -A2 '^Package: nvidia-' "$ROOT/build-in-container.sh" | grep -q 'linux-\*'; then
+grep -q 'trixie-backports' "$ROOT/build-in-container.sh" || fail "Debian backports não configurado no build"
+grep -q 'Pin-Priority: 990' "$ROOT/build-in-container.sh" || fail "prioridade backports não configurada"
+grep -q 'xserver-xorg-video-nvidia' "$ROOT/build-in-container.sh" || fail "pin NVIDIA ausente"
+if grep -A2 '^Package: nvidia-' "$ROOT/build-in-container.sh" | grep -q 'linux-\\*'; then
   fail "kernel não deve ser atualizado automaticamente para backports"
 fi
-grep -q 'kernel estável Debian 13 (6.12 LTS)' "$CONFIG/package-lists/kelpie.list.chroot" || fail "kernel estável para NVIDIA não documentado"
+grep -Fq 'kernel estável Debian 13 (6.12 LTS)' "$CONFIG/package-lists/kelpie.list.chroot" || fail "kernel estável para NVIDIA não documentado"
 
 if (( ERRORS > 0 )); then
   echo "Pré-verificação reprovada: $ERRORS problema(s)." >&2
