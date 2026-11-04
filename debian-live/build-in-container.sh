@@ -47,10 +47,13 @@ cat > /build/config/archives/trixie-backports.list.chroot <<'EOF'
 deb http://deb.debian.org/debian trixie-backports main contrib non-free non-free-firmware
 EOF
 cat > /build/config/archives/trixie-backports.pref.chroot <<'EOF'
-Package: nvidia-driver nvidia-kernel-dkms nvidia-settings nvidia-persistenced linux-image-amd64 linux-headers-amd64
+# Keep the NVIDIA driver stack and kernel ABI internally consistent:
+# their exact-version dependencies (including linux-base) must come from backports.
+Package: nvidia-* libnvidia-* xserver-xorg-video-nvidia linux-*
 Pin: release n=trixie-backports
 Pin-Priority: 990
 
+# All other backports remain opt-in; do not upgrade the whole live system.
 Package: *
 Pin: release n=trixie-backports
 Pin-Priority: 100
