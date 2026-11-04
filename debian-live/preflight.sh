@@ -79,8 +79,6 @@ grep -q '^branding: kelpie$' "$CONFIG/includes.chroot/etc/calamares/settings.con
 grep -q '^prompt-install: true$' "$CONFIG/includes.chroot/etc/calamares/settings.conf" || fail "confirmação Calamares ausente"
 grep -q 'trixie-backports' "$ROOT/build-in-container.sh" || fail "Debian backports não configurado no build"
 grep -q 'Pin-Priority: 990' "$ROOT/build-in-container.sh" || fail "prioridade backports não configurada"
-grep -q 'trixie-backports' "$ROOT/build-in-container.sh" || fail "Debian backports não configurado no build"
-grep -q 'Pin-Priority: 990' "$ROOT/build-in-container.sh" || fail "prioridade backports não configurada"
 grep -q 'xserver-xorg-video-nvidia' "$ROOT/build-in-container.sh" || fail "pin NVIDIA ausente"
 if grep -A2 '^Package: nvidia-' "$ROOT/build-in-container.sh" | grep -q 'linux-\\*'; then
   fail "kernel não deve ser atualizado automaticamente para backports"
