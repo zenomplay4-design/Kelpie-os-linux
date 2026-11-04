@@ -1,7 +1,0 @@
-{
-  "uuid": "kelpie-menu@kelpieos.local",
-  "name": "Kelpie OS Menu",
-  "description": "Botão de menu com a pata oficial do Kelpie OS.",
-  "shell-version": ["48", "49", "50"],
-  "version": 2
-}
