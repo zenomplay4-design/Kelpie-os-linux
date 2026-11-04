@@ -1,5 +1,0 @@
-ROTA ALTERNATIVA
-
-É possível compilar em Debian 13 amd64 usando Docker ou Podman, internet e pelo menos 25 GB livres. Execute ./build-with-container.sh.
-
-A ISO será gravada em dist/kelpie-os-linux-debian13-amd64.iso e acompanhada de SHA256SUMS.
