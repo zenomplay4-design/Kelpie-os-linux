@@ -49,7 +49,7 @@ EOF
 cat > /build/config/archives/trixie-backports.pref.chroot <<'EOF'
 # Keep the NVIDIA driver stack and kernel ABI internally consistent:
 # their exact-version dependencies (including linux-base) must come from backports.
-Package: nvidia-* libnvidia-* xserver-xorg-video-nvidia linux-*
+Package: nvidia-* libnvidia-* libgl*-nvidia* libgles*-nvidia* libegl*-nvidia* libvulkan*-nvidia* libxnvctrl* xserver-xorg-video-nvidia linux-*
 Pin: release n=trixie-backports
 Pin-Priority: 990
 
