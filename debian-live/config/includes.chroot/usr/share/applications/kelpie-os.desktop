@@ -1,8 +1,0 @@
-[Desktop Entry]
-Name=Kelpie OS
-Comment=Informações do Kelpie OS
-Exec=gnome-control-center
-Icon=kelpie-os
-Terminal=false
-Type=Application
-Categories=Settings;
