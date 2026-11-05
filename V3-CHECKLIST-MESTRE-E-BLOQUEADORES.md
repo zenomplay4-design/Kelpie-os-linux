@@ -107,7 +107,7 @@ Legenda:
 - [x] Executar validação APT de metadados e resolução de dependências: workflow de validação concluído com sucesso.
 - [x] Validar wallpaper oficial 16:9 no workflow de testes estáticos (run 70, sucesso).
 - [x] Validar sintaxe Python, scripts shell, testes unitários, sequência Calamares e metadados AppStream no workflow estático (run 70, sucesso).
-- [ ] Compilar ISO candidata no GitHub Actions (nova execução disparada após ajuste de recuperação do workflow).
+- [x] Compilar ISO candidata no GitHub Actions: build #66 (run 41754353319), commit `a860bf0`, concluído com sucesso em 04/11/2026; artefato `13287734605` contém a ISO candidata e `SHA256SUMS`, com checksum conferido no build.
 - [x] Adicionar validação pós-build do conteúdo essencial da ISO (kernel, initrd e filesystem.squashfs), catálogo El Torito e verificação SHA256; execução real ainda depende da nova ISO.
 - [ ] Inspecionar partições, bootloader e entradas UEFI/BIOS da ISO candidata gerada; o script de validação já verifica o catálogo El Torito e arquivos essenciais.
 - [ ] Testar ISO em máquinas virtuais UEFI e BIOS, incluindo instalação.
@@ -118,7 +118,7 @@ Legenda:
 
 ## Bloqueadores de lançamento atuais
 
-1. Ainda não existe build de ISO V3 da revisão atual confirmado; uma revisão anterior (build 30) produziu um artefato de 3,17 GB, ainda não aprovado como release.
+1. A ISO candidata da revisão `a860bf0` já foi compilada e publicada (build #66/run `41754353319`; artefato `13287734605`; ISO SHA-256 `a1198cece40d0b418bbbdc7ab94f6afd76420bf25f4708873f265ff028f2ffc7`). O checksum passou no build. O bloqueio atual é validar boot Live e instalação em VM/hardware; não é ISO final nem release.
 2. O Calamares personalizado foi integrado ao código e tem plano de teste seguro documentado, mas ainda precisa de teste de instalação em VM e hardware.
 3. Wallpaper oficial já foi integrado e validado no CI; GDM agora recebe a configuração do wallpaper Kelpie, mas blur, relógio e controles ainda precisam de teste visual.
 4. Kelpie Monitor e Kelpie Update já têm primeiras versões de código; Kelpie Disk já tem uma primeira versão de inventário somente leitura; Monitor, Update, Tweaks e Disk precisam de testes em sessão GNOME real.
@@ -143,3 +143,18 @@ A V3 permanece em desenvolvimento até que todos os itens obrigatórios sejam im
 - O build agora executa esse validador antes de enviar o artefato.
 - O preflight verifica a presença e a sintaxe do validador; o workflow estático também faz lint do script.
 - Essa validação é estrutural. Não prova boot real, instalação Calamares nem compatibilidade com a GTX 750.
+
+
+## Evidências do build candidato (04/11/2026)
+
+- Branch: `v3-development`; HEAD `a860bf02a65a48da8ce1726ac3802d9ad1e7aa76`.
+- Build ISO #66, run `41754353319`: concluído com sucesso; job `build` e as etapas de compilação e upload concluíram sem falha.
+- Testes estáticos #105, run `41754353321`: sucesso em sintaxe Python/Shell, testes unitários, sequência Calamares, AppStream, wallpaper e metadados da extensão GNOME.
+- Validação de configuração #121, run `41754353454`: sucesso na validação de metadados de pacotes e resolução de dependências Debian Trixie/APT.
+- Artefato candidato `kelpie-os-linux-v3-candidate-amd64`, ID `13287734605`, publicado em 04/11/2026 e com expiração em 18/11/2026 às 01:54:30 UTC. Tamanho do ZIP: 3.456.106.873 bytes.
+- O passo de upload terminou com sucesso e incluiu `dist/kelpie-os-linux-v3-amd64.iso` e `dist/SHA256SUMS`, com `if-no-files-found: error`.
+- ISO: 3.456.106.496 bytes. SHA-256 registrado em `SHA256SUMS`: `a1198cece40d0b418bbbdc7ab94f6afd76420bf25f4708873f265ff028f2ffc7`; `sha256sum --check` retornou `kelpie-os-linux-v3-amd64.iso: OK`.
+- SHA-256 do ZIP do artefato, informado pelo GitHub Actions: `b1befcc7495e352d4e78cff901cd85d35d2d97d31cdfe02973d1dcbe50936f8d`.
+- `xorriso` registrou entradas El Torito BIOS e UEFI e o comando `file` identificou uma ISO 9660 inicializável. Isso é validação estrutural, não teste de boot.
+- Avisos não fatais a acompanhar nos testes: o initramfs registrou que o cryptsetup não conseguiu determinar o dispositivo raiz; o live-build também removeu pacotes GRUB EFI/shim assinados ao registrar que Secure Boot não estava habilitado. Apesar da entrada UEFI no catálogo El Torito, o boot UEFI/BIOS continua pendente de validação em VM.
+- Nenhuma release foi publicada. A V3 permanece bloqueada para lançamento até os testes de instalação, sessão GNOME e hardware serem concluídos.
